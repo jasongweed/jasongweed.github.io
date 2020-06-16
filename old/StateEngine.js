@@ -93,6 +93,7 @@ function updateRender(){
 	$( "#playerLocation" ).text(`player is at ${player.x}, ${player.y}`);
 	$( "#destLocation" ).text(`mummy is at ${mummy.x}, ${mummy.y}`);
 	$( "#distance" ).text(`distance from player to mummy is ${mummy.distanceFromPlayer}`);
+	$( "#" ).text(`distance from player to mummy is ${mummy.distanceFromPlayer}`);
 }
 
 //TODO

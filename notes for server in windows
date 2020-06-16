@@ -1,5 +1,15 @@
 server in windows
 
+1. open cmd
+2. >>cd Desktop\softdev_MS\parkmummies
+3. >>python -m http.server
+
+
+
+
+9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+
+copied from webiste
 Open your command prompt (Windows)/ terminal (macOS/ Linux). To check Python is installed, enter the following command:
 
 python -V
