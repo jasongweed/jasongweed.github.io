@@ -8,12 +8,14 @@ function Player(gps_x, gps_y, x, y, sprite){
 	player.x = x;
 	player.y = y;
 	player.sprite=sprite;
-	player.alive = true;
-	//player.sprite.x = 100;
-  	//player.sprite.y = 100;
-  	player.sprite.anchor.set(0.5);
+	player.sprite.anchor.set(0.5);
   	player.sprite.zOrder=1;
-  	player.hearts = 4;
+	player.alive = true;
+	player.score = 0;
+  	player.hearts = 1;
+  	player.attackMode = false;
+  	player.cupcakes = []; //array to add cupcake objects
+  	player.attackModeEndTime = 0;
 	return player;
 }
 
@@ -21,18 +23,149 @@ Player.prototype.consoleLogSelf = function(){
 	console.log(this.x+" "+this.y);
 }
 
+Player.prototype.setPositionByGPS = function(){
+	if(devTestSpot==true){
+		//pass
+	}else{
+		let now = Date.now();
+		if (navigator.geolocation && now%2000<100) {
+    		navigator.geolocation.getCurrentPosition(getGeoPosition);
+			let pair = txf_GPS_to_gameworld(gps_x_current,gps_y_current, origin_gps_x, origin_gps_y, gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
+			this.x = pair[0];
+			this.y = pair[1];
+		}
+	}
+}
+
 Player.prototype.setRenderPosition = function(_player_obj,_pixi_center_x,_pixi_center_y){
 	this.sprite.x=_pixi_center_x;//+this.x;
 	this.sprite.y=_pixi_center_y;//-this.y;
 }
 
+Player.prototype.attackModeOn = function(){
+	console.log("attackMode on")
+	this.attackMode = true;
+	this.attackModeEndTime = Date.now()+5000;
+	this.sprite.texture=app.loader.resources.playerAttackModeSprite.texture;
+}
+
 Player.prototype.mummyDamage = function(){
-	this.hearts = this.hearts - 1;
+	if(this.attackMode == false){
+			this.hearts = this.hearts - 1;
+	}
 	console.log("hearts left: "+this.hearts);
 	if(this.hearts==0){
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
+		this.alive=false;
 	}
 }
+
+
+
+Player.prototype.addCupcake = function(sprite){
+	let i_x=this.x;
+    let i_y=this.y;
+    let i_sprite=PIXI.Sprite.from(app.loader.resources.cupcakeSprite.texture);
+   	i_sprite.anchor.set(0.5);
+	i_sprite.zOrder=2;
+
+    app.stage.addChild(i_sprite);
+    //add new cupcake to array
+    this.cupcakes.push( Cupcake(i_x, i_y, i_sprite) );
+    console.log("created cupcake "+i+"location:"+i_x+" "+ i_y);
+}
+
+Player.prototype.dropCupcake = function(){
+	//note: not yet implemented in gameplay
+	for(const b of this.cupcakes){
+		if (b.activated==false){
+			b.activate(this);
+			console.log("cupcake activated");
+			break;
+		}else{
+			console.log("no cupcakes");		}
+	}
+}
+
+Player.prototype.increaseScore = function(num){
+	this.score = this.score+num;
+}
+
+
+Player.prototype.updateTimerStateVars = function(){
+	let now = Date.now();
+	//see if attack mode active or expired
+	if(this.attackMode && now>this.attackModeEndTime){
+		this.attackMode = false;
+		this.sprite.texture=app.loader.resources.playerSprite.texture;
+		console.log("attack mode off");
+	}
+
+	//see if cupcakes active
+	for(const b of this.cupcakes){
+		//6/17/20: currently working on adding button to activate gathered explosive cupcakes
+		if (b.activated && !b.dead){
+			b.setRenderPosition(pixi_center_x,pixi_center_y,this.x, this.y);
+		}
+	}
+}
+
+
+
+
+function Cupcake (x,y,sprite){
+	let cupcake = Object.create(Cupcake.prototype);
+	cupcake.x=x;
+	cupcake.y=y;
+	cupcake.sprite=sprite;
+	cupcake.dead=false;
+	cupcake.activated=false;
+	cupcake.sprite.visible = false;
+	cupcake.indestructible = Math.random() < 0.2; // 20% chance of indestructible cupcake
+	if(cupcake.indestructible){cupcake.sprite.texture=app.loader.resources.blackHoleSprite.texture;}
+	console.log("made cupcake");
+	return cupcake;
+}
+
+Cupcake.prototype.activate = function(_player_obj){
+	this.x = _player_obj.x;
+	this.y = _player_obj.y;
+	this.activated = true;
+	this.sprite.visible = true;
+	this.sprite.height=30;
+	this.sprite.width=30;
+	this.setRenderPosition(_player_obj.sprite.x,_player_obj.sprite.y,_player_obj.x, player_obj.y);
+	app.stage.addChild(this.sprite);
+	console.log("cupcake render position:"+this.sprite.x+" "+this.sprite.y )
+}
+
+Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
+	for(const m of _mummies){
+		if(m.alive && m.active){
+			let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
+			if(d < 10 && this.activated && !this.dead){
+				m.die(_player_obj);
+				if(this.indestructible == false){
+					this.dead = true;
+					this.sprite.visible = false;
+				}
+			}
+		}
+	}
+}
+
+Cupcake.prototype.remove = function(){
+
+}
+
+Cupcake.prototype.setRenderPosition = function(_pixi_center_x,_pixi_center_y,_player_obj_x, player_obj_y) {
+	//users player object's location as a reference point
+	let pairXY = txf_gameworld_to_UI([this.x,this.y], _pixi_center_x, _pixi_center_y, _player_obj_x, player_obj_y,UI_zoomFactor);
+	this.sprite.x = pairXY[0];
+	this.sprite.y = pairXY[1];
+}
+
+//need to implement cupcake explode function
 
 
 function Mummy (x, y, speed, sprite){
@@ -52,7 +185,7 @@ function Mummy (x, y, speed, sprite){
 Mummy.prototype.activate_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<60 && this.active==false && this.alive){
+	if(dist<30 && this.active==false && this.alive && _player_obj.alive){
 		this.active=true;
 		this.sprite.texture=app.loader.resources.mummySprite.texture;
 	}
@@ -61,19 +194,29 @@ Mummy.prototype.activate_if_player_close = function(_player_obj){
 Mummy.prototype.attack_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<15 && this.active){
-		this.active=false;
-		this.alive=false;
+	if(dist<3 && this.active && _player_obj.alive && _player_obj.attackMode==false){
+		this.die(_player_obj);
 		_player_obj.mummyDamage();
-		this.sprite.texture=app.loader.resources.bonesSprite.texture;
+		console.log("scale factor, mummy attacked: "+UI_zoomFactor );
+	}else if(dist<3 && this.active && _player_obj.alive && _player_obj.attackMode==true){
+		//attack mode, no damage from mummies
+		this.die(_player_obj);
 	}
 }
 
 
 Mummy.prototype.chase = function(_player_obj) {
-	if (this.alive && this.active){
-		this.x += (_player_obj.x-this.x)/(50*this.speed);
-		this.y += (_player_obj.y-this.y)/(50*this.speed);
+	if (this.alive && this.active && _player_obj.alive){
+		let x_dist=_player_obj.x - this.x;
+		let y_dist=_player_obj.y - this.y;
+		let total_dist = distanceFunctionInGameworld(this.x,this.y, _player_obj.x, _player_obj.y);
+		if(total_dist!=0){ 
+			this.x = this.x + x_dist/total_dist * this.speed * 0.01;
+			this.y = this.y + y_dist/total_dist * this.speed * 0.01;
+		}
+		
+		//this.x += (_player_obj.x-this.x)/(50*this.speed);
+		//this.y += (_player_obj.y-this.y)/(50*this.speed);
 	}
 }
 
@@ -81,23 +224,32 @@ Mummy.prototype.consoleLogSelf = function() {
 	console.log(this.x+" "+this.y+" "+this.sprite.x+" "+this.sprite.y+" "+this.speed);
 }
 
+Mummy.prototype.die = function(_player_obj){
+		this.active=false;
+		this.alive=false;
+		this.sprite.texture=app.loader.resources.bonesSprite.texture;
+		_player_obj.increaseScore(1);
+}
+
 Mummy.prototype.setRenderPosition = function(_pixi_center_x,_pixi_center_y,_player_obj_x, player_obj_y) {
 	//users player object's location as a reference point
-	let pairXY = txf_gameworld_to_UI([this.x,this.y], _pixi_center_x, _pixi_center_y, _player_obj_x, player_obj_y);
+	let pairXY = txf_gameworld_to_UI([this.x,this.y], _pixi_center_x, _pixi_center_y, _player_obj_x, player_obj_y, UI_zoomFactor);
 	this.sprite.x = pairXY[0];
 	this.sprite.y = pairXY[1];
-	//console.log("mummy render position:"+this.sprite.x+" "+this.sprite.y )
 }
 
 
 
 
-function Digsite(x, y, digsiteFunction, sprite){
+function Digsite(x, y, digsiteFunction, sprite, type){
 	let digsite = Object.create(Digsite.prototype);
 	digsite.x = x;
 	digsite.y = y;
+	digsite.type = type;
 	digsite.digsiteFunction = digsiteFunction; //passes a function to perform on player or mummies (or whatever)
 	digsite.sprite = sprite;
+	digsite.sprite.anchor.set(0.5);
+	digsite.sprite.zOrder=3;
 	digsite.revealed = false;
 	return digsite;
 }
@@ -106,8 +258,9 @@ function Digsite(x, y, digsiteFunction, sprite){
 Digsite.prototype.activate_if_player_close = function(obj_to_act_on,_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<50 && this.revealed==false){
+	if(dist<10 && this.revealed==false && _player_obj.alive){
 		this.revealed=true;
+		this.sprite.texture=app.loader.resources.pickRedSprite.texture;
 		this.digsiteFunction(obj_to_act_on);
 	}
 }
@@ -118,12 +271,18 @@ Digsite.prototype.revealsite = function(){
 
 //some digsite functions
 function digsiteAddsHearts(_player_obj){
-	_player_obj.hearts = _player_obj.hearts + 2;
+	_player_obj.hearts = _player_obj.hearts + 1;
+	console.log("hearts: "+_player_obj.hearts+" "+Date.now());
+	_player_obj.addCupcake();
+}
+
+function digsiteAttackModeOn(_player_obj){
+	_player_obj.attackModeOn();	
 }
 
 Digsite.prototype.setRenderPosition = function(_pixi_center_x,_pixi_center_y,_player_obj_x, player_obj_y) {
 	//users player object's location as a reference point
-	let pairXY = txf_gameworld_to_UI([this.x,this.y], _pixi_center_x, _pixi_center_y, _player_obj_x, player_obj_y);
+	let pairXY = txf_gameworld_to_UI([this.x,this.y], _pixi_center_x, _pixi_center_y, _player_obj_x, player_obj_y, UI_zoomFactor);
 	this.sprite.x = pairXY[0];
 	this.sprite.y = pairXY[1];
 	//console.log("mummy render position:"+this.sprite.x+" "+this.sprite.y )
@@ -151,8 +310,8 @@ function Map (sprite,
       origin_gps_x,origin_gps_y,gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
 
 	//get UI coordinate pairs for map's top left corner and map's bottom using gameworld coordinates
-	map.map_UI_coords_top_left = txf_gameworld_to_UI(map.map_coords_top_left, pixi_center_x,pixi_center_y, 0, 0);
-	map.map_UI_coords_bottom_right = txf_gameworld_to_UI(map.map_coords_bottom_right, pixi_center_x,pixi_center_y, 0, 0);
+	map.map_UI_coords_top_left = txf_gameworld_to_UI(map.map_coords_top_left, pixi_center_x,pixi_center_y, 0, 0, UI_zoomFactor);
+	map.map_UI_coords_bottom_right = txf_gameworld_to_UI(map.map_coords_bottom_right, pixi_center_x,pixi_center_y, 0, 0,UI_zoomFactor);
 	
 	//assign map sprite location and store initial location
 	map.init_UI_x = Math.round(map.map_UI_coords_top_left[0]);
@@ -173,12 +332,27 @@ Map.prototype.consoleLogSelf = function() {
 	console.log(this.x+" "+this.y+" "+this.speed);
 }
 
-Map.prototype.setRenderPosition = function(_player_obj, _pixi_center_x, _pixi_center_y) {
+Map.prototype.setRenderPosition = function(_player_obj, _pixi_center_x, _pixi_center_y,_UI_zoomFactor) {
 	//users player object's location as a reference point
-	this.sprite.x= (-1)*_player_obj.x+ this.init_UI_x;
-	this.sprite.y= _player_obj.y + this.init_UI_y;
+	this.sprite.x= (-1)*_player_obj.x*_UI_zoomFactor+ this.init_UI_x;
+	this.sprite.y= _player_obj.y*_UI_zoomFactor + this.init_UI_y;
 }
 
+Map.prototype.rescale = function(_UI_zoomFactor,_player_obj, zoomIn){
+	if(zoomIn==true){
+		formerZoomFactor = _UI_zoomFactor / 1.2;
+	}else{
+		formerZoomFactor = _UI_zoomFactor * 1.2;
+	}
+	this.sprite.width = this.sprite.width * _UI_zoomFactor/formerZoomFactor;
+	this.sprite.height = this.sprite.height * _UI_zoomFactor/formerZoomFactor;
+	console.log("map width,height: "+this.sprite.width+" "+this.sprite.height);
+	this.init_UI_x = ((this.init_UI_x-pixi_center_x))*UI_zoomFactor/formerZoomFactor+pixi_center_x;
+	this.init_UI_y = ((this.init_UI_y-pixi_center_y))*UI_zoomFactor/formerZoomFactor+pixi_center_y;
+	console.log("map init x,y: "+this.init_UI_x+" "+this.init_UI_y+" "+_player_obj.x+" "+_player_obj.y);
+	//this.init_UI_x;
+
+}
 
 
 

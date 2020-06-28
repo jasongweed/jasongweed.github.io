@@ -9,27 +9,27 @@
     <meta name="author" content="evolution">
     <meta name="generator" content="Jekyll v3.8.5">
     <title>Park Mummy</title>
+    <script src="bootstrap/bootstrap-4.3.1-dist/js/jquery-3.4.1.min.js"></script>
     <script src="coordTransformations.js"></script>
     <script src="pixi.min.js"></script>
     <script src="objectTypes.js"></script>
+    <script src="gameLoopAndUpdateStateFunctions.js"></script>
+    <script src="gameworldGenerationFunctions.js"></script>
     <script src="parkmummies_setup_script.js"></script>
-    <script src="userInput.js"></script> <!--after setup_script -->
+    <script src="globalVars.js"></script> <!-- globalVar should be loaded after setup_script -->
+    <script src="userInput.js"></script> <!-- userInput should be loaded after setup_script -->
     
 
 
 
   </head>
   <body>
-  <br><br><br><br><br>
-  <p>See console log</p>
-    <h2 id="time"> Make sure logging on to localhost:8000 </h2>
-  <p id="distance"> distance </p>
-  <p id="gpsCoords1"> coords: </p>
-  <p id="gpsCoords2"> coords: </p>
+  <br><br>
+    <h2 id="time"> if testing, make sure logging on to localhost:8000 </h2>
   <div id="gameDiv"></div>
-
-  <script src="bootstrap/bootstrap-4.3.1-dist/js/jquery-3.4.1.min.js"></script>
-
+  <button id="bananaBtn">cupcake</button>
+  <button id="zoomInBtn">Zoom+</button>
+  <button id="zoomOutBtn">Zoom-</button>
 
   </body>
 </html>
