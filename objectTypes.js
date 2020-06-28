@@ -8,6 +8,10 @@ function Player(gps_x, gps_y, x, y, sprite){
 	player.x = x;
 	player.y = y;
 	player.sprite=sprite;
+	player.sprite.width=50;
+	player.sprite.height=50;
+	player.gameworld_width=50;
+	player.gameworld_height=50;
 	player.sprite.anchor.set(0.5);
   	player.sprite.zOrder=1;
 	player.alive = true;
@@ -45,7 +49,11 @@ Player.prototype.setRenderPosition = function(_player_obj,_pixi_center_x,_pixi_c
 Player.prototype.attackModeOn = function(){
 	console.log("attackMode on")
 	this.attackMode = true;
-	this.attackModeEndTime = Date.now()+5000;
+	if(devTestSpot){
+		this.attackModeEndTime = Date.now()+10000;
+	}else{//real gameplay
+		this.attackModeEndTime = Date.now()+300000; //5 minutes of attack mode with 300k
+	}
 	this.sprite.texture=app.loader.resources.playerAttackModeSprite.texture;
 }
 
@@ -117,6 +125,8 @@ function Cupcake (x,y,sprite){
 	let cupcake = Object.create(Cupcake.prototype);
 	cupcake.x=x;
 	cupcake.y=y;
+	cupcake.gameworld_width = 30;
+	cupcake.gameworld_height = 30;
 	cupcake.sprite=sprite;
 	cupcake.dead=false;
 	cupcake.activated=false;
@@ -143,7 +153,7 @@ Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
 	for(const m of _mummies){
 		if(m.alive && m.active){
 			let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
-			if(d < 10 && this.activated && !this.dead){
+			if(d < 15 && this.activated && !this.dead){
 				m.die(_player_obj);
 				if(this.indestructible == false){
 					this.dead = true;
@@ -173,6 +183,8 @@ function Mummy (x, y, speed, sprite){
 	let mummy = Object.create(Mummy.prototype);
 	mummy.x = x;
 	mummy.y = y;
+	mummy.gameworld_width = 30;
+	mummy.gameworld_height = 30;
 	mummy.speed = speed;
 	mummy.active= false;
 	mummy.alive = true;
@@ -185,7 +197,7 @@ function Mummy (x, y, speed, sprite){
 Mummy.prototype.activate_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<30 && this.active==false && this.alive && _player_obj.alive){
+	if(dist<50 && this.active==false && this.alive && _player_obj.alive){
 		this.active=true;
 		this.sprite.texture=app.loader.resources.mummySprite.texture;
 	}
@@ -211,8 +223,8 @@ Mummy.prototype.chase = function(_player_obj) {
 		let y_dist=_player_obj.y - this.y;
 		let total_dist = distanceFunctionInGameworld(this.x,this.y, _player_obj.x, _player_obj.y);
 		if(total_dist!=0){ 
-			this.x = this.x + x_dist/total_dist * this.speed * 0.01;
-			this.y = this.y + y_dist/total_dist * this.speed * 0.01;
+			this.x = this.x + x_dist/total_dist * this.speed * 0.002;
+			this.y = this.y + y_dist/total_dist * this.speed * 0.002;
 		}
 		
 		//this.x += (_player_obj.x-this.x)/(50*this.speed);
@@ -245,6 +257,8 @@ function Digsite(x, y, digsiteFunction, sprite, type){
 	let digsite = Object.create(Digsite.prototype);
 	digsite.x = x;
 	digsite.y = y;
+	digsite.gameworld_width = 30;
+	digsite.gameworld_height = 30;
 	digsite.type = type;
 	digsite.digsiteFunction = digsiteFunction; //passes a function to perform on player or mummies (or whatever)
 	digsite.sprite = sprite;
@@ -258,7 +272,7 @@ function Digsite(x, y, digsiteFunction, sprite, type){
 Digsite.prototype.activate_if_player_close = function(obj_to_act_on,_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<10 && this.revealed==false && _player_obj.alive){
+	if(dist<40 && this.revealed==false && _player_obj.alive){
 		this.revealed=true;
 		this.sprite.texture=app.loader.resources.pickRedSprite.texture;
 		this.digsiteFunction(obj_to_act_on);

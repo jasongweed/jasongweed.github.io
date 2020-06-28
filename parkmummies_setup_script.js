@@ -92,12 +92,12 @@ function doneLoading(e){
   //load map as sprite store within a Map type object
   createMapAndAddToStage();
   //load mummies as sprites and place in objects
-  createMummiesAndAddToStage();
+  createMummiesAndAddToStage(number_of_mummies_to_generate);
   //load digsite as sprites and place in objects
-  createDigsitesAndAddToStage()
+  createDigsitesAndAddToStage(number_of_digsites_to_generate)
   //load player on center stage as a Player type object, based on GPS coordinates
   createPlayerAndAddToStage();
-  createInfinitySitesAndAddToStage();
+  createInfinitySitesAndAddToStage(number_of_infsites_to_generate);
 
   //game loop
   app.ticker.add(gameLoop);

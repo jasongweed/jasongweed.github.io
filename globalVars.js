@@ -22,13 +22,16 @@ let player_obj;
 let map_obj;
 let map;
 let mummies = [];
+let number_of_mummies_to_generate = 20;
+let number_of_digsites_to_generate = 20;
+let number_of_infsites_to_generate = 20;
 let digsites = [];
 let keys = {}; //for accumulating pressed keyboard keys
 
 
 //gameworld related variables
-max_location_range_gameworld_coords_x = 300;
-max_location_range_gameworld_coords_y = 800;
+max_location_range_gameworld_coords_x = 600;
+max_location_range_gameworld_coords_y = 600;
 
 
 //aligning map: must be precise

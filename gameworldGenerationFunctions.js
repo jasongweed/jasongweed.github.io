@@ -5,8 +5,8 @@ function createPlayerAndAddToStage(){  //uses global variables
   app.stage.addChild(playerSprite);
 }
 
-function createMummiesAndAddToStage(){ //uses global variables
-  for(i=0;i<10;i++){
+function createMummiesAndAddToStage(_number_of_mummies_to_generate){ //uses global variables
+  for(i=0;i<_number_of_mummies_to_generate;i++){
     let i_x=get_ranged_rand_avoid_origin(0,max_location_range_gameworld_coords_x);
     let i_y=get_ranged_rand_avoid_origin(0, -1*max_location_range_gameworld_coords_y);
     let i_speed=Math.floor(Math.random() * 20 +5);
@@ -17,9 +17,9 @@ function createMummiesAndAddToStage(){ //uses global variables
   } 
 }
 
-function createDigsitesAndAddToStage(){ //uses global variables
+function createDigsitesAndAddToStage(_number_of_digsites_to_generate){ //uses global variables
   //cupcake sites
-  for(i=0;i<5;i++){
+  for(i=0;i<_number_of_digsites_to_generate;i++){
     let i_x=get_ranged_rand_avoid_origin(0,max_location_range_gameworld_coords_x);
     let i_y=get_ranged_rand_avoid_origin(0,-1*max_location_range_gameworld_coords_y);
     let i_sprite=PIXI.Sprite.from(app.loader.resources.pickBlueSprite.texture);
@@ -28,8 +28,8 @@ function createDigsitesAndAddToStage(){ //uses global variables
     console.log("created dig site "+i+"location:"+i_x+" "+ i_y);
   }
 }
-function createInfinitySitesAndAddToStage(){
-  for(i=0;i<10;i++){
+function createInfinitySitesAndAddToStage(_number_of_infinitysites_to_generate){
+  for(i=0;i<_number_of_infinitysites_to_generate;i++){
     let i_x=get_ranged_rand_avoid_origin(0, max_location_range_gameworld_coords_x);
     let i_y=get_ranged_rand_avoid_origin(0, -1*max_location_range_gameworld_coords_y);
     let i_sprite=PIXI.Sprite.from(app.loader.resources.infinitySprite.texture);
@@ -58,7 +58,7 @@ function createMapAndAddToStage(){   //uses global variables
 
 
 function get_ranged_rand_avoid_origin(_min_location_range_gameworld_coords_i,_max_location_range_gameworld_coords_i){
-    let rnum = _min_location_range_gameworld_coords_i + ((Math.random()) * 2) * _max_location_range_gameworld_coords_i;
+    let rnum = _min_location_range_gameworld_coords_i + ((Math.random()) * 2 -1) * _max_location_range_gameworld_coords_i;
     if(rnum>0){rnum=rnum+50;}
     if(rnum<0){rnum=rnum-50;}
     return rnum;

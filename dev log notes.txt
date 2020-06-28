@@ -1,0 +1,5 @@
+6/28/20
+-need to make mummies slower
+-increase mummy and site activation area
+-change (scale down) icon sprite size to fit zoom factor
+-reduce gameLoop cycling with timer, aim for 30 fps
