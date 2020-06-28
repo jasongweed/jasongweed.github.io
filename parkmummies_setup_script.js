@@ -5,8 +5,8 @@
 window.onload = function(){
     app = new PIXI.Application( //jgw this creates a canvas element
     {
-      width: 600,
-      height: 800,
+      width: 300,
+      height: 500,
       backgroundColor: 0xAAAAAA
     }
   );
