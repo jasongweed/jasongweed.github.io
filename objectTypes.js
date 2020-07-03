@@ -183,8 +183,8 @@ function Mummy (x, y, speed, sprite){
 	let mummy = Object.create(Mummy.prototype);
 	mummy.x = x;
 	mummy.y = y;
-	mummy.gameworld_width = 30;
-	mummy.gameworld_height = 30;
+	mummy.gameworld_width = 80;
+	mummy.gameworld_height = 80;
 	mummy.speed = speed;
 	mummy.active= false;
 	mummy.alive = true;
@@ -200,13 +200,15 @@ Mummy.prototype.activate_if_player_close = function(_player_obj){
 	if(dist<50 && this.active==false && this.alive && _player_obj.alive){
 		this.active=true;
 		this.sprite.texture=app.loader.resources.mummySprite.texture;
+		this.gameworld_width=30;
+		this.gameworld_height=30;
 	}
 }
 
 Mummy.prototype.attack_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<3 && this.active && _player_obj.alive && _player_obj.attackMode==false){
+	if(dist<10 && this.active && _player_obj.alive && _player_obj.attackMode==false){
 		this.die(_player_obj);
 		_player_obj.mummyDamage();
 		console.log("scale factor, mummy attacked: "+UI_zoomFactor );

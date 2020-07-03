@@ -9,7 +9,7 @@ function createMummiesAndAddToStage(_number_of_mummies_to_generate){ //uses glob
   for(i=0;i<_number_of_mummies_to_generate;i++){
     let i_x=get_ranged_rand_avoid_origin(0,max_location_range_gameworld_coords_x);
     let i_y=get_ranged_rand_avoid_origin(0, -1*max_location_range_gameworld_coords_y);
-    let i_speed=Math.floor(Math.random() * 20 +5);
+    let i_speed=Math.floor(Math.random() * 25 + 10);
     let i_sprite=PIXI.Sprite.from(app.loader.resources.questionMarkSprite.texture);
     app.stage.addChild(i_sprite);
     mummies.push( Mummy(i_x, i_y, i_speed, i_sprite) );
@@ -41,7 +41,7 @@ function createInfinitySitesAndAddToStage(_number_of_infinitysites_to_generate){
 
 function createMapAndAddToStage(){   //uses global variables
   //load map as sprite store within a Map type object
-  mapSprite = PIXI.Sprite.from(app.loader.resources.mapGrammercySprite.texture);
+  mapSprite = PIXI.Sprite.from(app.loader.resources.mapCentralParkSprite.texture);
   app.stage.addChild(mapSprite);
   map_obj = Map (mapSprite,
     mapTopLeftGpsCoordX, mapTopLeftGpsCoordY, 
