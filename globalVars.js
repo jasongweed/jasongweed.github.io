@@ -38,14 +38,14 @@ max_location_range_gameworld_coords_y = 600;
 //grammery map lower right: 40.738650, -73.980678. Upper left: 40.742877, -73.985388
 
 //central park3: top left -73.981889, 40.800354. Bottom right: -73.948556, 40.764544
-var mapTopLeftGpsCoordX = -73.981889;
-var mapTopLeftGpsCoordY = 40.800354;
-var mapBottomRightGpsCoordX = -73.948556;  
-var mapBottomRightGpsCoordY = 40.764544;
+//var mapTopLeftGpsCoordX = -73.981889;
+//var mapTopLeftGpsCoordY = 40.800354;
+//var mapBottomRightGpsCoordX = -73.948556;  
+//var mapBottomRightGpsCoordY = 40.764544;
 
 //ear river park top left: lat 40.740340, -73.982292, bottom right 40.720455, -73.971297
-//var mapTopLeftGpsCoordX = -73.982292;
-//var mapTopLeftGpsCoordY = 40.740340;
-//var mapBottomRightGpsCoordX = -73.971297;  
-//var mapBottomRightGpsCoordY = 40.720455;
+var mapTopLeftGpsCoordX = -73.982292;
+var mapTopLeftGpsCoordY = 40.740340;
+var mapBottomRightGpsCoordX = -73.971297;  
+var mapBottomRightGpsCoordY = 40.720455;
 

@@ -41,7 +41,7 @@ function createInfinitySitesAndAddToStage(_number_of_infinitysites_to_generate){
 
 function createMapAndAddToStage(){   //uses global variables
   //load map as sprite store within a Map type object
-  mapSprite = PIXI.Sprite.from(app.loader.resources.mapCentralParkSprite.texture);
+  mapSprite = PIXI.Sprite.from(app.loader.resources.mapGrammercySprite.texture);
   app.stage.addChild(mapSprite);
   map_obj = Map (mapSprite,
     mapTopLeftGpsCoordX, mapTopLeftGpsCoordY, 
