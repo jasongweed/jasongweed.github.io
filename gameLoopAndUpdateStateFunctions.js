@@ -60,4 +60,8 @@ function updatePlayer(){
       c.sprite.width = c.gameworld_width*UI_zoomFactor;
       c.sprite.height = c.gameworld_height*UI_zoomFactor;
   }
+
+  //lasso in nearby sites if player using lasso strike
+  player_obj.lassoAttractIfStrike(digsites);
+
 }

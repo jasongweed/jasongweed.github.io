@@ -19,6 +19,8 @@ function Player(gps_x, gps_y, x, y, sprite){
   	player.hearts = 1;
   	player.attackMode = false;
   	player.cupcakes = []; //array to add cupcake objects
+  	player.lassoStrikes = 10;
+  	player.lassoAttractEndTime = 0;
   	player.attackModeEndTime = 0;
 	return player;
 }
@@ -68,7 +70,9 @@ Player.prototype.mummyDamage = function(){
 	}
 }
 
-
+Player.prototype.getCupcakes = function(){
+	return this.cupcakes;
+}
 
 Player.prototype.addCupcake = function(sprite){
 	let i_x=this.x;
@@ -95,6 +99,33 @@ Player.prototype.dropCupcake = function(){
 	}
 }
 
+Player.prototype.lassoStrike = function(){
+	//uses one lassoStrike in inventory and sets ending time for lassoAttract function
+	if(this.lassoStrikes>0){
+		this.lassoStrikes = this.lassoStrikes - 1;
+		this.lassoAttractEndTime = Date.now()+5000;
+	}
+}
+
+Player.prototype.lassoAttractIfStrike = function(_site_objs){
+	//attracts nearby (perhaps out of reach) reward sites to players after the the lassoStrike function is activated by a button press
+	if(Date.now()<this.lassoAttractEndTime){
+		for(const site of _site_objs){
+			let d = distanceFunctionInGameworld(site.x, site.y, this.x, this.y);
+			if(d<80 && site.revealed==false){
+				console.log("lassoing");
+				let x_dist= site.x - this.x;
+				let y_dist= site.y - this.y;
+				let total_dist = distanceFunctionInGameworld(site.x,site.y, this.x, this.y);
+				if(total_dist!=0){ 
+					site.x = site.x - x_dist/total_dist * 100 * 0.002;
+					site.y = site.y - y_dist/total_dist * 100 * 0.002;
+				}
+			}
+		}		
+	}
+}
+
 Player.prototype.increaseScore = function(num){
 	this.score = this.score+num;
 }
@@ -117,7 +148,6 @@ Player.prototype.updateTimerStateVars = function(){
 		}
 	}
 }
-
 
 
 
@@ -186,11 +216,14 @@ function Mummy (x, y, speed, sprite){
 	mummy.gameworld_width = 80;
 	mummy.gameworld_height = 80;
 	mummy.speed = speed;
+	mummy.wakingModeEndTime = 0;
+	mummy.awaking = false;
 	mummy.active= false;
 	mummy.alive = true;
-	mummy.sprite=sprite;
+	mummy.sprite= sprite;
 	mummy.sprite.anchor.set(0.5);
 	mummy.sprite.zOrder=2;
+	mummy.targetOtherThanPlayer_GW_xy = [];
 	return mummy;
 }
 
@@ -198,20 +231,22 @@ Mummy.prototype.activate_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
 	if(dist<50 && this.active==false && this.alive && _player_obj.alive){
-		this.active=true;
-		this.sprite.texture=app.loader.resources.mummySprite.texture;
-		this.gameworld_width=30;
-		this.gameworld_height=30;
+		this.wakingModeEndTime = Date.now()+3000;
+		this.awaking = true;
+		this.sprite.texture = app.loader.resources.mummyWakingSprite.texture;
+		this.gameworld_width = 30;
+		this.gameworld_height = 30;
 	}
 }
 
 Mummy.prototype.attack_if_player_close = function(_player_obj){
+	let now = Date.now();
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<10 && this.active && _player_obj.alive && _player_obj.attackMode==false){
+	if(dist<10 && this.active && _player_obj.alive && _player_obj.attackMode==false && this.wakingModeEndTime<now){
 		this.die(_player_obj);
 		_player_obj.mummyDamage();
-		console.log("scale factor, mummy attacked: "+UI_zoomFactor );
+		//console.log("scale factor, mummy attacked: "+UI_zoomFactor );
 	}else if(dist<3 && this.active && _player_obj.alive && _player_obj.attackMode==true){
 		//attack mode, no damage from mummies
 		this.die(_player_obj);
@@ -220,9 +255,27 @@ Mummy.prototype.attack_if_player_close = function(_player_obj){
 
 
 Mummy.prototype.chase = function(_player_obj) {
-	if (this.alive && this.active && _player_obj.alive){
-		let x_dist=_player_obj.x - this.x;
-		let y_dist=_player_obj.y - this.y;
+	let now = Date.now();
+	let target_x =_player_obj.x;
+	let target_y =_player_obj.y;
+	//console.log("maybe chasing");
+	if(this.alive && (this.active || this.awaking) && _player_obj.alive && this.wakingModeEndTime<now){
+
+		//chase a cupcake if it's nearby instead of the player
+		for(const c of _player_obj.getCupcakes()){
+			let d = distanceFunctionInGameworld(c.x, c.y, this.x, this.y)
+			if(c.activated && c.dead==false && d<50 ){
+				target_x = c.x;
+				target_y = c.y;
+				break;
+			}
+		}
+
+		//console.log("chasing");
+		this.sprite.texture = app.loader.resources.mummySprite.texture;
+		this.active = true;
+		let x_dist= target_x - this.x;
+		let y_dist= target_y - this.y;
 		let total_dist = distanceFunctionInGameworld(this.x,this.y, _player_obj.x, _player_obj.y);
 		if(total_dist!=0){ 
 			this.x = this.x + x_dist/total_dist * this.speed * 0.002;
@@ -274,7 +327,7 @@ function Digsite(x, y, digsiteFunction, sprite, type){
 Digsite.prototype.activate_if_player_close = function(obj_to_act_on,_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<40 && this.revealed==false && _player_obj.alive){
+	if(dist<20 && this.revealed==false && _player_obj.alive){
 		this.revealed=true;
 		this.sprite.texture=app.loader.resources.pickRedSprite.texture;
 		this.digsiteFunction(obj_to_act_on);

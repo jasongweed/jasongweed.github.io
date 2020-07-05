@@ -14,7 +14,8 @@ window.onload = function(){
 
   //preload assets
   app.loader.baseUrl = "images";
-  app.loader.add("playerSprite","player.png").add("playerAttackModeSprite","playerAttackMode.png").add("mummySprite","mummy.png")
+  app.loader.add("playerSprite","player.png").add("playerAttackModeSprite","playerAttackMode.png");
+  app.loader.add("mummySprite","mummy.png").add("mummyWakingSprite","mummyWaking.png");
   app.loader.add("mapGrammercySprite","mapEastRiverPark.png").add("mapCentralParkSprite","centralpark3.png");
   app.loader.add("questionMarkSprite","question_mark.png").add("bonesSprite","bones.png").add("cupcakeSprite","cupcake.png");
   app.loader.add("pickBlueSprite","pickblue.png").add("pickRedSprite","pickred.png").add("blackHoleSprite","blackHole.png");

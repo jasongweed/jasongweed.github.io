@@ -6,7 +6,9 @@
 var gps_to_map_scale_factor = 100000; //default is 100000 
 var devTestSpot = false;
 var origin_gps_x = null; //this is a latitude based on initial gps coordinates obtained
+var recent_gps_x_arr = [];
 var origin_gps_y = null; 
+var recent_gps_x_arr = [];
 let gps_location_loaded = false;
 //var to keep track of current gps coordinates
 var gps_x_current; 

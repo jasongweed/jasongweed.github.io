@@ -11,13 +11,18 @@ $(document).ready(function(){
   $('#zoomInBtn').click(function(){
     UI_zoomFactor = UI_zoomFactor * 1.2;
     map_obj.rescale(UI_zoomFactor,player_obj, true);
-    console.log("UI_zoomFactor: "+UI_zoomFactor)
+    console.log("UI_zoomFactor: "+UI_zoomFactor);
   });
 
   $('#zoomOutBtn').click(function(){
     UI_zoomFactor = UI_zoomFactor/1.2;
     map_obj.rescale(UI_zoomFactor,player_obj, false);
-    console.log("UI_zoomFactor: "+UI_zoomFactor)
+    console.log("UI_zoomFactor: "+UI_zoomFactor);
+  });
+
+  $('#lassoBtn').click(function(){
+    player_obj.lassoStrike();
+    console.log("lassoBtn hit");
   });
   
 });
