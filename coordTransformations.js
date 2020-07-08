@@ -9,6 +9,17 @@ function txf_GPS_to_gameworld(longit, latit, origin_gps_x, origin_gps_y, scale_f
   return [retx,rety];
 }
 
+function txf_gameworld_to_GPS(x, y, origin_gps_x, origin_gps_y, scale_factor, long_over_lat_degree_dist_ratio){////, half_canvas_width, half_canvas_height){
+  //transforms gps coordinates of an object at [longit,latit] to relative to origin at initial location based on original gps coords
+  let ret_long=0.0;
+  ret_long= x*1/(scale_factor)+origin_gps_x;  // reverse was retx=(longit-origin_gps_x)*scale_factor;
+  let ret_lat=0.0;
+  ret_lat = (y*(1/long_over_lat_degree_dist_ratio)*(1/scale_factor))+origin_gps_y; //reverse was rety=(latit-origin_gps_y)*scale_factor*long_over_lat_degree_dist_ratio;
+  //console.log("gameworld retx: "+retx+" "+ "rety: "+rety);
+  return [ret_long,ret_lat];
+}
+
+
 function txf_gameworld_to_UI(pair, half_canvas_width, half_canvas_height, player_x, player_y,_UI_zoomFactor){
   let retx=0.0;
   retx=((pair[0] - player_x)*_UI_zoomFactor+half_canvas_width); 

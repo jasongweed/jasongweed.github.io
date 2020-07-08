@@ -24,7 +24,15 @@ $(document).ready(function(){
     player_obj.lassoStrike();
     console.log("lassoBtn hit");
   });
-  
+
+  $('#gpsBtn').click(function(){
+    let latlong_pair=txf_gameworld_to_GPS(player_obj.x, player_obj.y, origin_gps_x, origin_gps_y, gps_to_map_scale_factor,long_over_lat_degree_dist_ratio)
+    //console.log("gpsBtn clicked");
+    //console.log(latlong_pair[0]+" , "+latlong_pair[1]);
+    $('#latlong').html("generated: "+latlong_pair[0]+", "+latlong_pair[1]+"<br> real: "+gps_x_current+", "+gps_y_current);
+
+  });
+
 });
 
 

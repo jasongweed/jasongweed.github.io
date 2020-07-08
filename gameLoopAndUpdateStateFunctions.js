@@ -5,10 +5,16 @@ function gameLoop(){
     updatePlayer();
     updateMummies();
     updateDigsites();
+    updateHUD(); //empty function below
   }else{
     //if location not loaded, retry
     getLocationInit();
   }
+}
+
+function updateHUD(){
+  //
+
 }
 
 function updateMummies(){

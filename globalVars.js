@@ -3,12 +3,12 @@
 //global variables, constants
 
 //basic gps setup
-var gps_to_map_scale_factor = 100000; //default is 100000 
+var gps_to_map_scale_factor = 100000; //default is 100000, this is prior to any zooming
 var devTestSpot = false;
 var origin_gps_x = null; //this is a latitude based on initial gps coordinates obtained
-var recent_gps_x_arr = [];
+var recent_gps_x_arr = [];//7/4/20 not yet implemented
+var recent_gps_x_arr = []; //7/4/20 not yet implemented
 var origin_gps_y = null; 
-var recent_gps_x_arr = [];
 let gps_location_loaded = false;
 //var to keep track of current gps coordinates
 var gps_x_current; 
@@ -46,8 +46,10 @@ max_location_range_gameworld_coords_y = 600;
 //var mapBottomRightGpsCoordY = 40.764544;
 
 //ear river park top left: lat 40.740340, -73.982292, bottom right 40.720455, -73.971297
-var mapTopLeftGpsCoordX = -73.982292;
-var mapTopLeftGpsCoordY = 40.740340;
-var mapBottomRightGpsCoordX = -73.971297;  
-var mapBottomRightGpsCoordY = 40.720455;
+var mapTopLeftGpsCoordX = -73.982162;
+var mapTopLeftGpsCoordY = 40.740590;
+var mapBottomRightGpsCoordX = -73.970507;// old -73.971297;  
+var mapBottomRightGpsCoordY = 40.718345;// old 40.720455;
+
+
 
