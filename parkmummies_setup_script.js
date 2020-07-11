@@ -25,6 +25,8 @@ window.onload = function(){
   app.loader.onError.add(reportError);
   app.loader.load();
 
+
+
   //turn on mouse stuff
   app.stage.interactive = true;
   //app.stage.on("pointermove",movePlayerWithMouse);
@@ -58,6 +60,8 @@ function getGeoPosition(position) {
   }else{
     gps_x_current = position.coords.longitude;
     gps_y_current = position.coords.latitude;
+    gps_accuracy = position.coords.accuracy;
+    console.log("accuracy: "+position.coords.latitude+" "+position.coords.longitude+" "+ position.coords.accuracy);
     //alert(gps_y_current);
     if(gps_location_loaded==false){
       origin_gps_x=gps_x_current;
@@ -102,4 +106,10 @@ function doneLoading(e){
 
   //game loop
   app.ticker.add(gameLoop);
+
+
+
+
+
+
 }

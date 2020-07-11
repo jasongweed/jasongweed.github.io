@@ -59,7 +59,7 @@ function createMapAndAddToStage(){   //uses global variables
 
 function get_ranged_rand_avoid_origin(_min_location_range_gameworld_coords_i,_max_location_range_gameworld_coords_i){
     let rnum = _min_location_range_gameworld_coords_i + ((Math.random()) * 2 -1) * _max_location_range_gameworld_coords_i;
-    if(rnum>0){rnum=rnum+50;}
-    if(rnum<0){rnum=rnum-50;}
+    if(rnum>0){rnum=rnum+30;}
+    if(rnum<0){rnum=rnum-30;}
     return rnum;
 }

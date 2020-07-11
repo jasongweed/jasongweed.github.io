@@ -7,9 +7,11 @@ var gps_to_map_scale_factor = 100000; //default is 100000, this is prior to any 
 var devTestSpot = false;
 var origin_gps_x = null; //this is a latitude based on initial gps coordinates obtained
 var recent_gps_x_arr = [];//7/4/20 not yet implemented
-var recent_gps_x_arr = []; //7/4/20 not yet implemented
+var recent_gps_y_arr = []; //7/4/20 not yet implemented
 var origin_gps_y = null; 
+var gps_accuracy = null;
 let gps_location_loaded = false;
+
 //var to keep track of current gps coordinates
 var gps_x_current; 
 var gps_y_current;
@@ -24,9 +26,9 @@ let player_obj;
 let map_obj;
 let map;
 let mummies = [];
-let number_of_mummies_to_generate = 20;
-let number_of_digsites_to_generate = 20;
-let number_of_infsites_to_generate = 20;
+let number_of_mummies_to_generate = 30;
+let number_of_digsites_to_generate = 30;
+let number_of_infsites_to_generate = 10;
 let digsites = [];
 let keys = {}; //for accumulating pressed keyboard keys
 
@@ -48,8 +50,8 @@ max_location_range_gameworld_coords_y = 600;
 //ear river park top left: lat 40.740340, -73.982292, bottom right 40.720455, -73.971297
 var mapTopLeftGpsCoordX = -73.982162;
 var mapTopLeftGpsCoordY = 40.740590;
-var mapBottomRightGpsCoordX = -73.970507;// old -73.971297;  
-var mapBottomRightGpsCoordY = 40.718345;// old 40.720455;
+var mapBottomRightGpsCoordX = -73.970807;// old -73.971297;  
+var mapBottomRightGpsCoordY = 40.718845;// old 40.720455;
 
 
 
