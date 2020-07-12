@@ -33,6 +33,7 @@ $(document).ready(function(){
 
     // onClick of first interaction on page before I need the sounds
     //soundEffect.play();
+    
     soundEffect.src = 'sounds/shortheartbeat.mp3';
     soundEffect.play();
     
