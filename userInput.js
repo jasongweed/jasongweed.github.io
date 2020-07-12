@@ -32,10 +32,10 @@ $(document).ready(function(){
     $('#latlong').html("generated: "+latlong_pair[0]+", "+latlong_pair[1]+"<br> real: "+gps_x_current+", "+gps_y_current+"<br> acc:"+gps_accuracy);
 
     // onClick of first interaction on page before I need the sounds
+    //soundEffect.play();
+    soundEffect.src = 'sounds/shortheartbeat.mp3';
     soundEffect.play();
-    heartSoundEffect.play();
-    heartSoundEffect.src = 'sounds/shortheartbeat.mp3';
-    heartSoundEffect.play();
+    
   });
 
 });

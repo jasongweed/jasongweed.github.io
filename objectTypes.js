@@ -299,10 +299,11 @@ Mummy.prototype.chase = function(_player_obj) {
 		//play heartbeat sound if close 
 		if(target_x==_player_obj.x && target_y==_player_obj.y && total_dist<50){
 
-			if (heartSoundEffect.duration > 0 && !heartSoundEffect.paused) {
-				pass
+			if (soundEffect.duration > 0 && !soundEffect.paused) {
+				//do nothing
 			}else{
-				heartSoundEffect.play();
+				soundEffect.src = 'sounds/shortheartbeat.mp3';
+				soundEffect.play();
 			}
 		}
 		//this.x += (_player_obj.x-this.x)/(50*this.speed);
