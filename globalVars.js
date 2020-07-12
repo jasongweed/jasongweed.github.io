@@ -6,8 +6,6 @@
 var gps_to_map_scale_factor = 100000; //default is 100000, this is prior to any zooming
 var devTestSpot = false;
 var origin_gps_x = null; //this is a latitude based on initial gps coordinates obtained
-var recent_gps_x_arr = [];//7/4/20 not yet implemented
-var recent_gps_y_arr = []; //7/4/20 not yet implemented
 var origin_gps_y = null; 
 var gps_accuracy = null;
 let gps_location_loaded = false;
@@ -37,6 +35,9 @@ let keys = {}; //for accumulating pressed keyboard keys
 max_location_range_gameworld_coords_x = 600;
 max_location_range_gameworld_coords_y = 600;
 
+
+//sound
+const soundEffect = new Audio();
 
 //aligning map: must be precise
 //grammery map lower right: 40.738650, -73.980678. Upper left: 40.742877, -73.985388

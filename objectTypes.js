@@ -34,7 +34,7 @@ Player.prototype.setPositionByGPS = function(){
 		//pass
 	}else{
 		let now = Date.now();
-		if (navigator.geolocation && now%2000<100) {
+		if (navigator.geolocation && now%1000<20) {
     		navigator.geolocation.getCurrentPosition(getGeoPosition);
 			let pair = txf_GPS_to_gameworld(gps_x_current,gps_y_current, origin_gps_x, origin_gps_y, gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
 			this.x = pair[0];
@@ -224,7 +224,6 @@ function Mummy (x, y, speed, sprite){
 	mummy.sprite.anchor.set(0.5);
 	mummy.sprite.zOrder=2;
 	mummy.targetOtherThanPlayer_GW_xy = [];
-	mummy.heartbeatSound = new sound("sounds/shortheartbeat.mp3");
 	return mummy;
 }
 
@@ -235,8 +234,11 @@ Mummy.prototype.activate_if_player_close = function(_player_obj){
 		this.wakingModeEndTime = Date.now()+10000;
 		if(this.awaking==false){
 			//play sound
-			let trespassSound = new sound("sounds/trespass.mp3");
-			trespassSound.play();
+			// later on when you actually want to play a sound at any point without user interaction
+			soundEffect.src = 'sounds/trespass.mp3';
+			soundEffect.play();
+			//let trespassSound = new sound("sounds/trespass.mp3");
+			//trespassSound.play();
 		}
 		this.awaking = true;
 		this.sprite.texture = app.loader.resources.mummyWakingSprite.texture;
@@ -279,8 +281,8 @@ Mummy.prototype.chase = function(_player_obj) {
 		if(this.awaking){
 			this.sprite.texture = app.loader.resources.mummySprite.texture;
 			//play sound
-			let mummyAwakenSound = new sound("sounds/mummyAwaken.mp3");
-			mummyAwakenSound.play();
+			soundEffect.src = 'sounds/mummyAwaken.mp3';
+			soundEffect.play();
 			this.awaking=false;
 			this.active = true;
 		}
@@ -297,10 +299,10 @@ Mummy.prototype.chase = function(_player_obj) {
 		//play heartbeat sound if close 
 		if(target_x==_player_obj.x && target_y==_player_obj.y && total_dist<50){
 
-			if (this.heartbeatSound.duration > 0 && !this.heartbeatSound.paused) {
-				let asdf = 1;//pass
+			if (heartSoundEffect.duration > 0 && !heartSoundEffect.paused) {
+				pass
 			}else{
-				this.heartbeatSound.play();
+				heartSoundEffect.play();
 			}
 		}
 		//this.x += (_player_obj.x-this.x)/(50*this.speed);

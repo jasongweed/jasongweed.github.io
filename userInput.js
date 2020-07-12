@@ -6,7 +6,6 @@ $(document).ready(function(){
   $('#bananaBtn').click(function(){
     //references global variable player_obj
     player_obj.dropCupcake();
-    console.log("attempt sound");
   });
 
   $('#zoomInBtn').click(function(){
@@ -32,8 +31,11 @@ $(document).ready(function(){
     //console.log(latlong_pair[0]+" , "+latlong_pair[1]);
     $('#latlong').html("generated: "+latlong_pair[0]+", "+latlong_pair[1]+"<br> real: "+gps_x_current+", "+gps_y_current+"<br> acc:"+gps_accuracy);
 
-    loadSounds();
-
+    // onClick of first interaction on page before I need the sounds
+    soundEffect.play();
+    heartSoundEffect.play();
+    heartSoundEffect.src = 'sounds/shortheartbeat.mp3';
+    heartSoundEffect.play()
   });
 
 });
