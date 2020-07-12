@@ -9,6 +9,9 @@ var origin_gps_x = null; //this is a latitude based on initial gps coordinates o
 var origin_gps_y = null; 
 var gps_accuracy = null;
 let gps_location_loaded = false;
+//let gps_now_timepoint = null;//to be continuously updated
+let gps_last_timepoint = 0;//to be continuously updated
+
 
 //var to keep track of current gps coordinates
 var gps_x_current; 

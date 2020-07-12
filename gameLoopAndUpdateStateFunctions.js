@@ -51,7 +51,7 @@ function updateDigsites(){
 
 function updatePlayer(){
   //update player state
-  player_obj.setPositionByGPS();
+  player_obj.setPositionByGPS(gps_last_timepoint);
   player_obj.setRenderPosition(player_obj,pixi_center_x,pixi_center_y); //always in center
   player_obj.updateTimerStateVars();
   

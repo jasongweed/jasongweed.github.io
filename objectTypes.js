@@ -29,13 +29,14 @@ Player.prototype.consoleLogSelf = function(){
 	console.log(this.x+" "+this.y);
 }
 
-Player.prototype.setPositionByGPS = function(){
+Player.prototype.setPositionByGPS = function(gps_last_timepoint){
 	if(devTestSpot==true){
 		//pass
 	}else{
-		let now = Date.now();
-		if (navigator.geolocation && now%1000<20) {
+		//console.log(gps_last_timepoint);
+		if (navigator.geolocation && Date.now()%1000<50 && (Date.now() - gps_last_timepoint)>500) {
     		navigator.geolocation.getCurrentPosition(getGeoPosition);
+    		console.log("now gps position");
 			let pair = txf_GPS_to_gameworld(gps_x_current,gps_y_current, origin_gps_x, origin_gps_y, gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
 			this.x = pair[0];
 			this.y = pair[1];
@@ -290,14 +291,14 @@ Mummy.prototype.chase = function(_player_obj) {
 		//physically chase
 		let x_dist= target_x - this.x;
 		let y_dist= target_y - this.y;
-		let total_dist = distanceFunctionInGameworld(this.x,this.y, _player_obj.x, _player_obj.y);
+		let total_dist = distanceFunctionInGameworld(this.x,this.y, target_x, target_y);
 		if(total_dist!=0){ 
 			this.x = this.x + x_dist/total_dist * this.speed * 0.002;
 			this.y = this.y + y_dist/total_dist * this.speed * 0.002;
 		}
 
 		//play heartbeat sound if close 
-		if(target_x==_player_obj.x && target_y==_player_obj.y && total_dist<50){
+		if(target_x==_player_obj.x && target_y==_player_obj.y && total_dist<80){
 
 			if (soundEffect.duration > 0 && !soundEffect.paused) {
 				//do nothing

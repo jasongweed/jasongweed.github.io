@@ -66,7 +66,8 @@ function getGeoPosition(position) {
     if(gps_location_loaded==false){
       origin_gps_x=gps_x_current;
       origin_gps_y=gps_y_current;
-    }                          
+    }
+    gps_last_timepoint = Date.now(); //global var                          
   }
 }
 
