@@ -38,6 +38,7 @@ max_location_range_gameworld_coords_y = 600;
 
 //sound
 const soundEffect = new Audio();
+const heartSoundEffect = new Audio();
 
 //aligning map: must be precise
 //grammery map lower right: 40.738650, -73.980678. Upper left: 40.742877, -73.985388

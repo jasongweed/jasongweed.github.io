@@ -35,7 +35,7 @@ $(document).ready(function(){
     soundEffect.play();
     heartSoundEffect.play();
     heartSoundEffect.src = 'sounds/shortheartbeat.mp3';
-    heartSoundEffect.play()
+    heartSoundEffect.play();
   });
 
 });
