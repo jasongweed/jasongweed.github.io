@@ -232,7 +232,11 @@ Mummy.prototype.activate_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
 	if(dist<50 && this.active==false && this.alive && _player_obj.alive){
-		this.wakingModeEndTime = Date.now()+10000;
+		if(devTestSpot==true){
+			this.wakingModeEndTime = Date.now()+3000;
+		}else{
+			this.wakingModeEndTime = Date.now()+20000;
+		}
 		if(this.awaking==false){
 			//play sound
 			// later on when you actually want to play a sound at any point without user interaction

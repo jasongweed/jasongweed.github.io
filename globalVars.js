@@ -36,7 +36,7 @@ let keys = {}; //for accumulating pressed keyboard keys
 
 //gameworld related variables
 max_location_range_gameworld_coords_x = 600;
-max_location_range_gameworld_coords_y = 600;
+max_location_range_gameworld_coords_y = 800;
 
 
 //sound
