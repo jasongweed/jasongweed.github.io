@@ -56,7 +56,7 @@ const soundEffect2 = new Audio();
 var mapTopLeftGpsCoordX = -73.982162;
 var mapTopLeftGpsCoordY = 40.740590;
 var mapBottomRightGpsCoordX = -73.970807;// old -73.971297;  
-var mapBottomRightGpsCoordY = 40.718845;// old 40.720455;
+var mapBottomRightGpsCoordY = 40.718545;// old 40.720455;
 
 
 
