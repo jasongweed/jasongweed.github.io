@@ -186,6 +186,10 @@ Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
 			let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
 			if(d < 15 && this.activated && !this.dead){
 				m.die(_player_obj);
+				//play sound
+				soundEffect.src = 'sounds/eatcupcake.mp3';
+				soundEffect.play();
+
 				if(this.indestructible == false){
 					this.dead = true;
 					this.sprite.visible = false;

@@ -39,9 +39,20 @@ window.onload = function(){
   getLocationInit();//this sets gps_x and gps_y vars
 }
 
+
+function geo_error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+var geo_options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
 function getLocationInit() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getGeoPosition);
+    navigator.geolocation.getCurrentPosition(getGeoPosition,geo_error,geo_options);
     //console.log("Got geolocation information");
     if(origin_gps_x!=null){
       gps_location_loaded=true;
@@ -52,6 +63,8 @@ function getLocationInit() {
     getLocationInit();//try again
   }
 }
+
+
 
 function getGeoPosition(position) {
   if(devTestSpot==true){

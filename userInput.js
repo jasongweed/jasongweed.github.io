@@ -20,6 +20,7 @@ $(document).ready(function(){
     console.log("UI_zoomFactor: "+UI_zoomFactor);
   });
 
+
   $('#lassoBtn').click(function(){
     player_obj.lassoStrike();
     console.log("lassoBtn hit");
@@ -36,8 +37,22 @@ $(document).ready(function(){
     
     soundEffect.src = 'sounds/shortheartbeat.mp3';
     soundEffect.play();
-    
   });
+
+
+  $('#bgMusicBtn').click(function(){
+    soundEffect2.src = 'sounds/fesliyan_chase.mp3';
+    soundEffect2.volume=0.2;
+    soundEffect2.play();
+
+  });
+
+  soundEffect2.addEventListener("ended", function(){
+       myAudio.currentTime = 0;
+       soundEffect2.play();
+  });
+
+
 
 });
 
