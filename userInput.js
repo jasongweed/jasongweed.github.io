@@ -42,7 +42,7 @@ $(document).ready(function(){
 
   $('#bgMusicBtn').click(function(){
     soundEffect2.src = 'sounds/fesliyan_chase.mp3';
-    soundEffect2.volume=0.2;
+    soundEffect2.volume=0.1;
     soundEffect2.play();
 
   });
