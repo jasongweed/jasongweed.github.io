@@ -46,8 +46,8 @@ function geo_error(err) {
 
 var geo_options = {
   enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
+  timeout: 1000,
+  maximumAge: 500
 };
 
 function getLocationInit() {

@@ -1,6 +1,12 @@
+
+
+//Display score
+
+function updateScore(_player_obj){
+  document.getElementById("score").innerHTML = Math.round(_player_obj.score);
+}
+
 //controls
-
-
 //jquery UI stuff
 $(document).ready(function(){
   $('#bananaBtn').click(function(){
@@ -42,9 +48,8 @@ $(document).ready(function(){
 
   $('#bgMusicBtn').click(function(){
     soundEffect2.src = 'sounds/fesliyan_chase.mp3';
-    soundEffect2.volume=0.1;
+    soundEffect2.volume=0.5;
     soundEffect2.play();
-
   });
 
   soundEffect2.addEventListener("ended", function(){

@@ -185,6 +185,7 @@ Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
 		if(m.alive && m.active){
 			let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
 			if(d < 15 && this.activated && !this.dead){
+				_player_obj.increaseScore(100);
 				m.die(_player_obj);
 				//play sound
 				soundEffect.src = 'sounds/eatcupcake.mp3';
@@ -221,6 +222,7 @@ function Mummy (x, y, speed, sprite){
 	mummy.gameworld_width = 80;
 	mummy.gameworld_height = 80;
 	mummy.speed = speed;
+	mummy.distanceTraveled = 0;
 	mummy.wakingModeEndTime = 0;
 	mummy.awaking = false;
 	mummy.active= false;
@@ -261,10 +263,12 @@ Mummy.prototype.attack_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
 	if(dist<10 && this.active && _player_obj.alive && _player_obj.attackMode==false && this.wakingModeEndTime<now){
-		this.die(_player_obj);
+		this.die(_player_obj); //mummy dies
+		_player_obj.increaseScore(-100); //penalty to score
 		_player_obj.mummyDamage();
 	}else if(dist<3 && this.active && _player_obj.alive && _player_obj.attackMode==true){
 		//attack mode, no damage from mummies
+		_player_obj.increaseScore(100);
 		this.die(_player_obj);
 	}
 }
@@ -292,6 +296,8 @@ Mummy.prototype.chase = function(_player_obj) {
 			//play sound
 			soundEffect.src = 'sounds/mummyAwaken.mp3';
 			soundEffect.play();
+			soundEffect2.src = 'sounds/fesliyan_chase.mp3';
+			soundEffect2.play();
 			this.awaking=false;
 			this.active = true;
 		}
@@ -301,8 +307,26 @@ Mummy.prototype.chase = function(_player_obj) {
 		let y_dist= target_y - this.y;
 		let total_dist = distanceFunctionInGameworld(this.x,this.y, target_x, target_y);
 		if(total_dist!=0){ 
-			this.x = this.x + x_dist/total_dist * this.speed * 0.002;
-			this.y = this.y + y_dist/total_dist * this.speed * 0.002;
+			let diff_x = x_dist/total_dist * this.speed * 0.002;
+			let diff_y = y_dist/total_dist * this.speed * 0.002;
+			this.x = this.x + diff_x;
+			this.y = this.y + diff_y;
+			let diff_xy = Math.sqrt((Math.pow(diff_x,2))+(Math.pow(diff_y,2)));
+			this.distanceTraveled += diff_xy;
+			
+			//add a score bonus for continued chasing, unless attackMode in which case subtract
+			if(_player_obj.attackMode == false){
+				_player_obj.score += 1/3*diff_xy;
+			}else{
+				_player_obj.score -= 1/3*diff_xy;
+			}
+
+			
+		}
+
+		//die if chase over distance limit
+		if(this.distanceTraveled >= 600){
+			this.die(_player_obj);
 		}
 
 		//play heartbeat sound if close 
@@ -329,7 +353,7 @@ Mummy.prototype.die = function(_player_obj){
 		this.active=false;
 		this.alive=false;
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
-		_player_obj.increaseScore(1);
+		//_player_obj.increaseScore(100);
 }
 
 Mummy.prototype.setRenderPosition = function(_pixi_center_x,_pixi_center_y,_player_obj_x, player_obj_y) {
@@ -365,7 +389,8 @@ Digsite.prototype.activate_if_player_close = function(obj_to_act_on,_player_obj)
 		//play sound
 		let digsiteSound = new sound("sounds/digsite.mp3");
 		digsiteSound.play();
-		this.awaking=false;
+		//this.awaking=false; 7/26/20 not sure if this doing anything?
+		_player_obj.increaseScore(50);
 		this.revealed=true;
 		this.sprite.texture=app.loader.resources.pickRedSprite.texture;
 		this.digsiteFunction(obj_to_act_on);
