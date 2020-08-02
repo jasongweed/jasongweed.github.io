@@ -16,7 +16,7 @@ function Player(gps_x, gps_y, x, y, sprite){
   	player.sprite.zOrder=1;
 	player.alive = true;
 	player.score = 0;
-  	player.hearts = 1;
+  	player.hearts = 2;
   	player.attackMode = false;
   	player.cupcakes = []; //array to add cupcake objects
   	player.lassoStrikes = 10;
@@ -436,8 +436,8 @@ function Map (sprite,
       gps_to_map_scale_factor,long_over_lat_degree_dist_ratio,
       pixi_center_x,pixi_center_y){
 
+	//console.log("for map, origin gps x,y and top left x,y"+origin_gps_x+" "+origin_gps_y+" ; "+mapTopLeftGpsCoordX+" "+mapTopLeftGpsCoordY);
 	let map = Object.create(Map.prototype);
-	
 	//assign the map image as the sprite	
 	map.sprite = sprite;
 
@@ -446,6 +446,7 @@ function Map (sprite,
       origin_gps_x,origin_gps_y,gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
 	map.map_coords_bottom_right = txf_GPS_to_gameworld(mapBottomRightGpsCoordX, mapBottomRightGpsCoordY, 
       origin_gps_x,origin_gps_y,gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
+	//console.log("maps GW coord TL, BR: "+map.map_coords_top_left+" ; "+map.map_coords_bottom_right);
 
 	//get UI coordinate pairs for map's top left corner and map's bottom using gameworld coordinates
 	map.map_UI_coords_top_left = txf_gameworld_to_UI(map.map_coords_top_left, pixi_center_x,pixi_center_y, 0, 0, UI_zoomFactor);
@@ -460,7 +461,7 @@ function Map (sprite,
 	//determine sprite width and height based on differences between top left and bottom right in terms of x and y
 	map.sprite.width = Math.round(map.map_UI_coords_bottom_right[0]-map.map_UI_coords_top_left[0]);
   	map.sprite.height = Math.round(map.map_UI_coords_bottom_right[1]-map.map_UI_coords_top_left[1]);
-
+  	console.log("map width, height: "+map.sprite.width+" "+map.sprite.height);
   	map.sprite.anchor.set(0,0);
 
 	return map;
@@ -487,7 +488,7 @@ Map.prototype.rescale = function(_UI_zoomFactor,_player_obj, zoomIn){
 	console.log("map width,height: "+this.sprite.width+" "+this.sprite.height);
 	this.init_UI_x = ((this.init_UI_x-pixi_center_x))*UI_zoomFactor/formerZoomFactor+pixi_center_x;
 	this.init_UI_y = ((this.init_UI_y-pixi_center_y))*UI_zoomFactor/formerZoomFactor+pixi_center_y;
-	console.log("map init x,y: "+this.init_UI_x+" "+this.init_UI_y+" "+_player_obj.x+" "+_player_obj.y);
+	console.log("map init UI_x,UI_y: "+this.init_UI_x+" "+this.init_UI_y+" "+_player_obj.x+" "+_player_obj.y);
 	//this.init_UI_x;
 
 }

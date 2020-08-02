@@ -72,8 +72,8 @@ function watchPosition(_get_gps_success_fn) {
 }
 
 function get_gps_success_fn(pos) {
-  gps_x_current = pos.coords.latitude;
-  gps_y_current = pos.coords.longitude;
+  gps_y_current = pos.coords.latitude;
+  gps_x_current = pos.coords.longitude;
   gps_accuracy = pos.coords.accuracy;
   if(gps_location_loaded == false){
       origin_gps_x = gps_x_current;

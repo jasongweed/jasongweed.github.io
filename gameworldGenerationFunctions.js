@@ -13,7 +13,7 @@ function createMummiesAndAddToStage(_number_of_mummies_to_generate){ //uses glob
     let i_sprite=PIXI.Sprite.from(app.loader.resources.questionMarkSprite.texture);
     app.stage.addChild(i_sprite);
     mummies.push( Mummy(i_x, i_y, i_speed, i_sprite) );
-    console.log(mummies[i]);
+    //console.log(mummies[i]);
   } 
 }
 
@@ -25,7 +25,7 @@ function createDigsitesAndAddToStage(_number_of_digsites_to_generate){ //uses gl
     let i_sprite=PIXI.Sprite.from(app.loader.resources.pickBlueSprite.texture);
     app.stage.addChild(i_sprite);
     digsites.push( Digsite(i_x, i_y, digsiteAddsHearts, i_sprite,"cupcake"));
-    console.log("created dig site "+i+"location:"+i_x+" "+ i_y);
+    //console.log("created dig site "+i+"location:"+i_x+" "+ i_y);
   }
 }
 function createInfinitySitesAndAddToStage(_number_of_infinitysites_to_generate){
