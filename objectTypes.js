@@ -35,8 +35,8 @@ Player.prototype.setPositionByGPS = function(gps_last_timepoint){
 	}else{
 		//console.log(gps_last_timepoint);
 		if (navigator.geolocation && Date.now()%1000<50 && (Date.now() - gps_last_timepoint)>500) {
-    		navigator.geolocation.getCurrentPosition(getGeoPosition);
-    		console.log("now gps position");
+    		//navigator.geolocation.getCurrentPosition(getGeoPosition);
+    		console.log("coords: "+gps_x_current+" "+gps_y_current);//+" "+ position.coords.accuracy);
 			let pair = txf_GPS_to_gameworld(gps_x_current,gps_y_current, origin_gps_x, origin_gps_y, gps_to_map_scale_factor,long_over_lat_degree_dist_ratio);
 			this.x = pair[0];
 			this.y = pair[1];
@@ -68,6 +68,10 @@ Player.prototype.mummyDamage = function(){
 	if(this.hearts==0){
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
 		this.alive=false;
+		//play sound
+		soundEffect.src = 'sounds/scream_public.mp3';
+		soundEffect.play();
+
 	}
 }
 
@@ -188,8 +192,8 @@ Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
 				_player_obj.increaseScore(100);
 				m.die(_player_obj);
 				//play sound
-				soundEffect.src = 'sounds/eatcupcake.mp3';
-				soundEffect.play();
+				//soundEffect.src = 'sounds/eatcupcake.mp3';
+				//soundEffect.play();
 
 				if(this.indestructible == false){
 					this.dead = true;
@@ -353,7 +357,9 @@ Mummy.prototype.die = function(_player_obj){
 		this.active=false;
 		this.alive=false;
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
-		//_player_obj.increaseScore(100);
+		//play sound
+		soundEffect.src = 'sounds/mummy_die_public.mp3';
+		soundEffect.play();
 }
 
 Mummy.prototype.setRenderPosition = function(_pixi_center_x,_pixi_center_y,_player_obj_x, player_obj_y) {

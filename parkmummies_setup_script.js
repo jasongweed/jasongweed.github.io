@@ -27,11 +27,11 @@ window.onload = function(){
 
 
 
-  //turn on mouse stuff
+  //turn on mouse stuff (no longer using)
   app.stage.interactive = true;
   //app.stage.on("pointermove",movePlayerWithMouse);
 
-  //turn on keyboard stuff
+  //turn on keyboard listener
   window.addEventListener("keydown",keysDown);
   window.addEventListener("keyup",keysUp);
 
@@ -52,7 +52,8 @@ var geo_options = {
 
 function getLocationInit() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getGeoPosition,geo_error,geo_options);
+    watchPosition(get_gps_success_fn);
+    //navigator.geolocation.getCurrentPosition(getGeoPosition,geo_error,geo_options);
     //console.log("Got geolocation information");
     if(origin_gps_x!=null){
       gps_location_loaded=true;
@@ -64,7 +65,24 @@ function getLocationInit() {
   }
 }
 
+function watchPosition(_get_gps_success_fn) {
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(_get_gps_success_fn);
+  }
+}
 
+function get_gps_success_fn(pos) {
+  gps_x_current = pos.coords.latitude;
+  gps_y_current = pos.coords.longitude;
+  gps_accuracy = pos.coords.accuracy;
+  if(gps_location_loaded == false){
+      origin_gps_x = gps_x_current;
+      origin_gps_y = gps_y_current;
+  }
+  console.log("initial gps reading: "+pos.coords.latitude+" "+pos.coords.longitude+" "+ pos.coords.accuracy);
+  gps_last_timepoint = Date.now(); //global var                          
+
+}
 
 function getGeoPosition(position) {
   if(devTestSpot==true){
@@ -101,6 +119,7 @@ function reportError(e){
 
 function doneLoading(e){
 
+  //this section is effectively main() for the app 
 
   origin_gps_x=gps_x_current;//set origin to (at this point loaded) initial gps coordinates
   origin_gps_y=gps_y_current;
@@ -118,7 +137,7 @@ function doneLoading(e){
   createPlayerAndAddToStage();
   createInfinitySitesAndAddToStage(number_of_infsites_to_generate);
 
-  //game loop
+  //game loop -- this adds and starts the main gameLoop function
   app.ticker.add(gameLoop);
 
 
