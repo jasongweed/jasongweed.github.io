@@ -188,12 +188,9 @@ Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
 	for(const m of _mummies){
 		if(m.alive && m.active){
 			let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
-			if(d < (this.sprite.height+_player_obj.sprite.height) && this.activated && !this.dead){
+			if(d < (this.sprite.height/2+m.sprite.height/3) && this.activated && !this.dead){
 				_player_obj.increaseScore(100);
 				m.die(_player_obj);
-				//play sound
-				//soundEffect.src = 'sounds/eatcupcake.mp3';
-				//soundEffect.play();
 
 				if(this.indestructible == false){
 					this.dead = true;
@@ -266,7 +263,7 @@ Mummy.prototype.attack_if_player_close = function(_player_obj){
 	let now = Date.now();
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<10 && this.active && _player_obj.alive && _player_obj.attackMode==false && this.wakingModeEndTime<now){
+	if(dist<(this.sprite.height/2+_player_obj.sprite.height/3) && this.active && _player_obj.alive && _player_obj.attackMode==false && this.wakingModeEndTime<now){
 		this.die(_player_obj); //mummy dies
 		_player_obj.increaseScore(-100); //penalty to score
 		_player_obj.mummyDamage();
