@@ -188,7 +188,7 @@ Cupcake.prototype.convertMummyIfClose = function(_mummies,_player_obj){
 	for(const m of _mummies){
 		if(m.alive && m.active){
 			let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
-			if(d < 15 && this.activated && !this.dead){
+			if(d < (this.sprite.height+_player_obj.sprite.height) && this.activated && !this.dead){
 				_player_obj.increaseScore(100);
 				m.die(_player_obj);
 				//play sound
