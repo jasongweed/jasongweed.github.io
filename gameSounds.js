@@ -1,12 +1,17 @@
 
 
-function sound(src) {
-      this.sound = document.createElement("audio");
-      this.sound.src = src;
-      this.sound.setAttribute("preload", "auto");
-      this.sound.setAttribute("controls", "none");
-      this.sound.style.display = "none";
-      document.body.appendChild(this.sound);
+
+//currently this is not being used
+
+
+function Sound(src) {
+      let soundy = Object.create(Sound.prototype);
+      soundy = document.createElement("audio");
+      soundy.src = src;
+      soundy.setAttribute("preload", "auto");
+      soundy.setAttribute("controls", "none");
+      soundy.style.display = "none";
+      document.body.appendChild(this.soundy);
       this.play = function(){
         this.sound.play();
       }
@@ -14,5 +19,13 @@ function sound(src) {
         this.sound.pause();
       }
 }
+
+Sound.prototype.play_or_continue_track(trackname) = function(){
+  if(this.sound.src!=trackname){
+    this.play(trackname);
+  }
+}
+
+
 
 

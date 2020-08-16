@@ -47,16 +47,12 @@ $(document).ready(function(){
 
 
   $('#bgMusicBtn').click(function(){
-    soundEffect2.src = 'sounds/fesliyan_chase.mp3';
+    soundEffect2.src = 'sounds/shortheartbeat.mp3';
     soundEffect2.volume=0.5;
     soundEffect2.play();
+    soundEffect2.loop=true;
+    user_has_interacted_with_UI=true;
   });
-
-  soundEffect2.addEventListener("ended", function(){
-       myAudio.currentTime = 0;
-       soundEffect2.play();
-  });
-
 
 
 });

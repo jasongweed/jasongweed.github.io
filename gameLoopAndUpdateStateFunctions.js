@@ -6,6 +6,7 @@ function gameLoop(){
     updateMummies();
     updateDigsites();
     updateHUD(player_obj);
+    updateMusic()
   }else{
     //if location not loaded, retry
     getLocationInit();
@@ -18,17 +19,18 @@ function updateHUD(_player_obj){
 }
 
 function updateMummies(){
+  let chase_mode = false;
   for(const m of mummies){
-      //update state
-      m.activate_if_player_close(player_obj);
-      m.chase(player_obj);
-      m.attack_if_player_close(player_obj);
-
-      //update UI rendering
-      m.setRenderPosition(pixi_center_x,pixi_center_y,player_obj.x,player_obj.y);  
-      m.sprite.width = m.gameworld_width*UI_zoomFactor;
-      m.sprite.height = m.gameworld_height*UI_zoomFactor;
-  }
+    //update state
+    m.activate_if_player_close(player_obj);
+    m.chase(player_obj);
+    m.attack_if_player_close(player_obj);
+    //update UI rendering
+    m.setRenderPosition(pixi_center_x,pixi_center_y,player_obj.x,player_obj.y);  
+    m.sprite.width = m.gameworld_width*UI_zoomFactor;
+    m.sprite.height = m.gameworld_height*UI_zoomFactor;
+     
+  } 
 }
 
 function updateDigsites(){
@@ -71,3 +73,35 @@ function updatePlayer(){
   player_obj.lassoAttractIfStrike(digsites);
 
 }
+
+function updateMusic(){
+  
+  let chase_mode = false;
+  
+  for(const m of mummies){
+    if(m.isActive()==true){
+      chase_mode=true;
+    } 
+  }
+  
+  let getUrl = window.location;
+  if(chase_mode==true) {
+    //console.log("here is src: "++soundEffect2.src);
+    if(soundEffect2.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
+      //pass
+    }else {
+      //console.log("start chase");
+      soundEffect2.src=getUrl+"/sounds/fesliyan_chase.mp3";
+      soundEffect2.play();
+    }  
+  }else{ //chase mode is false
+    if(soundEffect2.src==(getUrl+"/sounds/calm_bg.mp3")) {
+      //pass
+    }else if (user_has_interacted_with_UI) { //otherwise fails to load
+      //console.log("start chase");
+      soundEffect2.src=getUrl+"/sounds/calm_bg.mp3";
+      soundEffect2.play();
+    }
+  }
+}
+

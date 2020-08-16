@@ -33,7 +33,7 @@ let digsites = [];
 
 //UI vars
 let keys = {}; //for accumulating pressed keyboard keys
-
+let user_has_interacted_with_UI = false;
 
 //gameworld related variables
 max_location_range_gameworld_coords_x = 600; //range of generated location x coordinates for creating sites around user

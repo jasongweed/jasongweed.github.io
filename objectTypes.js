@@ -274,6 +274,10 @@ Mummy.prototype.attack_if_player_close = function(_player_obj){
 	}
 }
 
+Mummy.prototype.isActive = function(){
+	return this.active;
+}
+
 
 Mummy.prototype.chase = function(_player_obj) {
 	let now = Date.now();
@@ -297,8 +301,8 @@ Mummy.prototype.chase = function(_player_obj) {
 			//play sound
 			soundEffect.src = 'sounds/mummyAwaken.mp3';
 			soundEffect.play();
-			soundEffect2.src = 'sounds/fesliyan_chase.mp3';
-			soundEffect2.play();
+			//soundEffect2.src = 'sounds/fesliyan_chase.mp3'; now this is done in the update mummies function
+			//soundEffect2.play();
 			this.awaking=false;
 			this.active = true;
 		}
@@ -355,7 +359,7 @@ Mummy.prototype.die = function(_player_obj){
 		this.alive=false;
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
 		//play sound
-		soundEffect.src = 'sounds/mummy_die_public.mp3';
+		soundEffect.src = 'sounds/mummy_die_catbomb_public.mp3';
 		soundEffect.play();
 }
 
@@ -390,8 +394,8 @@ Digsite.prototype.activate_if_player_close = function(obj_to_act_on,_player_obj)
 	let dist = Math.sqrt(dist_from_player_sq);
 	if(dist<30 && this.revealed==false && _player_obj.alive){
 		//play sound
-		let digsiteSound = new sound("sounds/digsite.mp3");
-		digsiteSound.play();
+		//let digsiteSound = new sound("sounds/digsite.mp3");
+		//digsiteSound.play();
 		//this.awaking=false; 7/26/20 not sure if this doing anything?
 		_player_obj.increaseScore(50);
 		this.revealed=true;
