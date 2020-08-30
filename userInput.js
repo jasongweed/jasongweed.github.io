@@ -11,7 +11,7 @@ function updateScore(_player_obj){
 $(document).ready(function(){
   $('#bananaBtn').click(function(){
     //references global variable player_obj
-    player_obj.dropCupcake();
+    player_obj.dropMeowcat();
   });
 
   $('#zoomInBtn').click(function(){
@@ -39,18 +39,16 @@ $(document).ready(function(){
     $('#latlong').html("generated: "+latlong_pair[0]+", "+latlong_pair[1]+"<br> real: "+gps_x_current+", "+gps_y_current+"<br> acc:"+gps_accuracy);
 
     // onClick of first interaction on page before I need the sounds
-    //soundEffect.play();
-    
-    soundEffect.src = 'sounds/shortheartbeat.mp3';
-    soundEffect.play();
+    sfx_1.heartbeat();//soundEffect.play();
+
   });
 
 
   $('#bgMusicBtn').click(function(){
-    soundEffect2.src = 'sounds/shortheartbeat.mp3';
-    soundEffect2.volume=0.5;
-    soundEffect2.play();
-    soundEffect2.loop=true;
+    //soundEffect2.src = 'sounds/shortheartbeat.mp3';
+    //soundEffect2.volume=0.5;
+    //soundEffect2.play();
+    //soundEffect2.loop=true;
     user_has_interacted_with_UI=true;
   });
 
@@ -83,7 +81,7 @@ function getKeyBoardInput(){
   if(keys['32']){ //key for space
     //references global variable player_obj
     devTestSpot = true;
-    player_obj.dropCupcake();
+    player_obj.dropMeowcat();
   }
   if(keys['49']){ //key for '1'
     //references global variable player_obj

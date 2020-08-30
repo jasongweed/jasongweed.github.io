@@ -18,10 +18,12 @@ function Player(gps_x, gps_y, x, y, sprite){
 	player.score = 0;
   	player.hearts = 2;
   	player.attackMode = false;
-  	player.cupcakes = []; //array to add cupcake objects
+  	player.meowcats = []; //array to add meowcat objects
+
   	player.lassoStrikes = 10;
   	player.lassoAttractEndTime = 0;
-  	player.attackModeEndTime = 0;
+    player.attackModeEndTime = 0;
+    console.log("player made");  
 	return player;
 }
 
@@ -69,38 +71,39 @@ Player.prototype.mummyDamage = function(){
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
 		this.alive=false;
 		//play sound
-		soundEffect.src = 'sounds/scream_public.mp3';
-		soundEffect.play();
+		
+		//soundEffect.src = 'sounds/scream_public.mp3';
+		//soundEffect.play();
 
 	}
 }
 
-Player.prototype.getCupcakes = function(){
-	return this.cupcakes;
+Player.prototype.getMeowcats = function(){
+	return this.meowcats;
 }
 
-Player.prototype.addCupcake = function(sprite){
+Player.prototype.addMeowcat = function(sprite){
 	let i_x=this.x;
     let i_y=this.y;
-    let i_sprite=PIXI.Sprite.from(app.loader.resources.cupcakeSprite.texture);
+    let i_sprite=PIXI.Sprite.from(app.loader.resources.meowcatSprite.texture);
    	i_sprite.anchor.set(0.5);
 	i_sprite.zOrder=2;
 
     app.stage.addChild(i_sprite);
-    //add new cupcake to array
-    this.cupcakes.push( Cupcake(i_x, i_y, i_sprite) );
-    console.log("created cupcake "+i+"location:"+i_x+" "+ i_y);
+    //add new meowcat to array
+    this.meowcats.push( Meowcat(i_x, i_y, i_sprite) );
+    console.log("created meowcat "+i+"location:"+i_x+" "+ i_y);
 }
 
-Player.prototype.dropCupcake = function(){
+Player.prototype.dropMeowcat = function(){
 	//note: not yet implemented in gameplay
-	for(const b of this.cupcakes){
+	for(const b of this.meowcats){
 		if (b.activated==false){
 			b.activate(this);
-			console.log("cupcake activated");
+			console.log("meowcat activated");
 			break;
 		}else{
-			console.log("no cupcakes");		}
+			console.log("no meowcats");		}
 	}
 }
 
@@ -112,7 +115,7 @@ Player.prototype.lassoStrike = function(){
 	}
 }
 
-Player.prototype.lassoAttractIfStrike = function(_site_objs){
+Player.prototype.lassoAttractIfStrike = function(_site_objs, _mummies){
 	//attracts nearby (perhaps out of reach) reward sites to players after the the lassoStrike function is activated by a button press
 	if(Date.now()<this.lassoAttractEndTime){
 		for(const site of _site_objs){
@@ -123,12 +126,25 @@ Player.prototype.lassoAttractIfStrike = function(_site_objs){
 				let y_dist= site.y - this.y;
 				let total_dist = distanceFunctionInGameworld(site.x,site.y, this.x, this.y);
 				if(total_dist!=0){ 
-					site.x = site.x - x_dist/total_dist * 100 * 0.002;
+                    site.x = site.x - x_dist / total_dist * 100 * 0.002;
 					site.y = site.y - y_dist/total_dist * 100 * 0.002;
 				}
 			}
-		}		
-	}
+        }
+        for(const m of _mummies){
+            let d = distanceFunctionInGameworld(m.x, m.y, this.x, this.y);
+			if(d<100 && m.active==false && m.awaking==false){
+				console.log("lassoing mummy");
+				let x_dist= m.x - this.x;
+				let y_dist= m.y - this.y;
+				let total_dist = distanceFunctionInGameworld(m.x,m.y, this.x, this.y);
+				if(total_dist!=0){ 
+                    m.x = m.x - x_dist / total_dist * 100 * 0.002;
+					m.y = m.y - y_dist/total_dist * 100 * 0.002;
+				}
+			}
+        }
+    }
 }
 
 Player.prototype.increaseScore = function(num){
@@ -145,9 +161,9 @@ Player.prototype.updateTimerStateVars = function(){
 		console.log("attack mode off");
 	}
 
-	//see if cupcakes active
-	for(const b of this.cupcakes){
-		//6/17/20: currently working on adding button to activate gathered explosive cupcakes
+	//see if meowcats active
+	for(const b of this.meowcats){
+		//6/17/20: currently working on adding button to activate gathered explosive meowcats
 		if (b.activated && !b.dead){
 			b.setRenderPosition(pixi_center_x,pixi_center_y,this.x, this.y);
 		}

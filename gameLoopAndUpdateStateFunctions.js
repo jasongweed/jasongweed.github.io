@@ -6,7 +6,7 @@ function gameLoop(){
     updateMummies();
     updateDigsites();
     updateHUD(player_obj);
-    updateMusic()
+    updateMusic(); //defined in gameSounds.js
   }else{
     //if location not loaded, retry
     getLocationInit();
@@ -37,7 +37,7 @@ function updateDigsites(){
   let i=0;
   for(const s of digsites){
       //update state
-      if(s.type=="cupcake"){
+      if(s.type=="meowcat"){
         s.activate_if_player_close(player_obj, player_obj);
       }else if(s.type=="infinity"){
         s.activate_if_player_close(player_obj,player_obj);
@@ -63,58 +63,14 @@ function updatePlayer(){
   player_obj.sprite.height = player_obj.gameworld_height*UI_zoomFactor;
 
   //update player's assets state and UI rendering
-  for(const c of player_obj.cupcakes){
+  for(const c of player_obj.meowcats){
       c.convertMummyIfClose(mummies,player_obj);
       c.sprite.width = c.gameworld_width*UI_zoomFactor;
       c.sprite.height = c.gameworld_height*UI_zoomFactor;
   }
 
   //lasso in nearby sites if player using lasso strike
-  player_obj.lassoAttractIfStrike(digsites);
+  player_obj.lassoAttractIfStrike(digsites,mummies);
 
 }
 
-/*function updateMusic(){
-  
-  let chase_mode = false;
-  
-  for(const m of mummies){
-    if(m.isActive()==true){
-      chase_mode=true;
-    } 
-  }
-  
-  let getUrl = window.location;
-  let bg_audio_promise_fulfilled = false;
-  getUrl = getUrl.protocol + "//" + getUrl.host;// + "/" + getUrl.pathname.split('/')[1];
-  if(chase_mode==true && user_has_interacted_with_UI==true) {
-    //console.log("here is src: "++soundEffect2.src);
-    if(soundEffect2.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
-      //pass
-    }else {
-      //console.log("start chase");
-      soundEffect2.src=getUrl+"/sounds/fesliyan_chase.mp3";
-      soundEffect2.play();
-      bg_audio_promise_fulfilled = false; //resets a boolean to false so it can be activated when switch to bg music
-    }  
-  }else if (user_has_interacted_with_UI==true){ 
-    //chase mode is false
-    if(soundEffect2.src==(getUrl+"/sounds/calm_bg.mp3") && bg_audio_promise_fulfilled==true) {
-      //already loaded bg music and playing, so let it keep playing
-    }else if (bg_audio_promise_fulfilled==false) { 
-      //code for switching to bg music at random timepoint
-      console.log("start bg music");
-      soundEffect2.src=getUrl+"/sounds/calm_bg.mp3";
-      let se2_promise = soundEffect2.play();
-      //to load and switch to random timepoint, first need to check loaded (via promise), then move to timepoint
-      //if (se2_promise!=undefined)
-      //{
-      //  let time1 = Math.floor(Math.random()*500);
-      //  soundEffect2.currentTime = time1; 
-      //  console.log(time1);
-      //}
-
-    }
-  }
-}
-*/

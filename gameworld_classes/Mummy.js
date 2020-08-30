@@ -22,26 +22,26 @@ function Mummy (x, y, speed, sprite){
 }
 
 Mummy.prototype.activate_if_player_close = function(_player_obj){
-	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
-	let dist = Math.sqrt(dist_from_player_sq);
-	if(dist<50 && this.active==false && this.alive && _player_obj.alive){
-		if(devTestSpot==true){
-			this.wakingModeEndTime = Date.now()+3000;
-		}else{
-			this.wakingModeEndTime = Date.now()+20000;
-		}
-		if(this.awaking==false){
+	if(this.awaking==false){
+		//calc mummy distance from player
+		let dist_from_player_sq = Math.pow(this.x - _player_obj.x, 2) + Math.pow(this.y - _player_obj.y, 2);
+		let dist = Math.sqrt(dist_from_player_sq);
+		//if mummy close to player and not active, put mummy in waking mode
+		if(dist<50 && this.active==false && this.alive && _player_obj.alive){
+			if(devTestSpot==true){
+				this.wakingModeEndTime = Date.now()+3000;
+			}else if ( this.active==false){
+				this.wakingModeEndTime = Date.now()+30000;
+			}
+		
+			this.awaking = true;
+			this.sprite.texture = app.loader.resources.mummyWakingSprite.texture;
+			this.gameworld_width = 30;
+			this.gameworld_height = 30;
+			
 			//play sound
-			// later on when you actually want to play a sound at any point without user interaction
-			soundEffect.src = 'sounds/trespass.mp3';
-			soundEffect.play();
-			//let trespassSound = new sound("sounds/trespass.mp3");
-			//trespassSound.play();
+			sfx_1.trespass();
 		}
-		this.awaking = true;
-		this.sprite.texture = app.loader.resources.mummyWakingSprite.texture;
-		this.gameworld_width = 30;
-		this.gameworld_height = 30;
 	}
 }
 
@@ -50,11 +50,13 @@ Mummy.prototype.attack_if_player_close = function(_player_obj){
 	let dist_from_player_sq = Math.pow(this.x-_player_obj.x,2)+Math.pow(this.y-_player_obj.y,2);
 	let dist = Math.sqrt(dist_from_player_sq);
 	if(dist<(this.sprite.height/2+_player_obj.sprite.height/3) && this.active && _player_obj.alive && _player_obj.attackMode==false && this.wakingModeEndTime<now){
+		sfx_1.mummyFall();
 		this.die(_player_obj); //mummy dies
 		_player_obj.increaseScore(-100); //penalty to score
 		_player_obj.mummyDamage();
-	}else if(dist<3 && this.active && _player_obj.alive && _player_obj.attackMode==true){
+	}else if(dist<20 && this.active && _player_obj.alive && _player_obj.attackMode==true){
 		//attack mode, no damage from mummies
+		sfx_1.mummyFall();
 		_player_obj.increaseScore(100);
 		this.die(_player_obj);
 	}
@@ -71,8 +73,8 @@ Mummy.prototype.chase = function(_player_obj) {
 	let target_y =_player_obj.y;
 	if(this.alive && (this.active || this.awaking) && _player_obj.alive && this.wakingModeEndTime<now){
 
-		//chase a cupcake if it's nearby instead of the player
-		for(const c of _player_obj.getCupcakes()){
+		//chase a meowcat if it's nearby instead of the player
+		for(const c of _player_obj.getMeowcats()){
 			let d = distanceFunctionInGameworld(c.x, c.y, this.x, this.y)
 			if(c.activated && c.dead==false && d<50 ){
 				target_x = c.x;
@@ -85,10 +87,8 @@ Mummy.prototype.chase = function(_player_obj) {
 		if(this.awaking){
 			this.sprite.texture = app.loader.resources.mummySprite.texture;
 			//play sound
-			soundEffect.src = 'sounds/mummyAwaken.mp3';
-			soundEffect.play();
-			//soundEffect2.src = 'sounds/fesliyan_chase.mp3'; now this is done in the update mummies function
-			//soundEffect2.play();
+			sfx_1.mummyAwaken(); //play mummy awaken snarl
+			sfx_1.chaseMusic(); //play chase music
 			this.awaking=false;
 			this.active = true;
 		}
@@ -117,21 +117,15 @@ Mummy.prototype.chase = function(_player_obj) {
 
 		//die if chase over distance limit
 		if(this.distanceTraveled >= 600){
+			sfx_1.mummyFall();
 			this.die(_player_obj);
+
 		}
 
 		//play heartbeat sound if close 
 		if(target_x==_player_obj.x && target_y==_player_obj.y && total_dist<80){
-
-			if (soundEffect.duration > 0 && !soundEffect.paused) {
-				//do nothing
-			}else{
-				soundEffect.src = 'sounds/shortheartbeat.mp3';
-				soundEffect.play();
-			}
+			sfx_1.heartbeat();
 		}
-		//this.x += (_player_obj.x-this.x)/(50*this.speed);
-		//this.y += (_player_obj.y-this.y)/(50*this.speed);
 
 	}
 }
@@ -144,9 +138,6 @@ Mummy.prototype.die = function(_player_obj){
 		this.active=false;
 		this.alive=false;
 		this.sprite.texture=app.loader.resources.bonesSprite.texture;
-		//play sound
-		soundEffect.src = 'sounds/mummy_die_catbomb_public.mp3';
-		soundEffect.play();
 }
 
 Mummy.prototype.setRenderPosition = function(_pixi_center_x,_pixi_center_y,_player_obj_x, player_obj_y) {

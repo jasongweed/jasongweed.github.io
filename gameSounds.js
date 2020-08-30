@@ -11,35 +11,23 @@ function updateMusic(){
   }
   
   let getUrl = window.location;
-  let bg_audio_promise_fulfilled = false;
+  //let bg_audio_promise_fulfilled = false;
   getUrl = getUrl.protocol + "//" + getUrl.host;// + "/" + getUrl.pathname.split('/')[1];
   if(chase_mode==true && user_has_interacted_with_UI==true) {
     //console.log("here is src: "++soundEffect2.src);
-    if(soundEffect2.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
+    if(sfx_1.bg_music.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
       //pass
     }else {
       //console.log("start chase");
-      soundEffect2.src=getUrl+"/sounds/fesliyan_chase.mp3";
-      soundEffect2.play();
-      bg_audio_promise_fulfilled = false; //resets a boolean to false so it can be activated when switch to bg music
+      sfx_1.chaseMusic();
     }  
   }else if (user_has_interacted_with_UI==true){ 
     //chase mode is false
-    if(soundEffect2.src==(getUrl+"/sounds/calm_bg.mp3") && bg_audio_promise_fulfilled==true) {
+    if(sfx_1.bg_music.src==(getUrl+"/sounds/calm_bg.mp3")){
       //already loaded bg music and playing, so let it keep playing
-    }else if (bg_audio_promise_fulfilled==false) { 
-      //code for switching to bg music at random timepoint
+    }else if (true) { 
       console.log("start bg music");
-      soundEffect2.src=getUrl+"/sounds/calm_bg.mp3";
-      let se2_promise = soundEffect2.play();
-      //to load and switch to random timepoint, first need to check loaded (via promise), then move to timepoint
-      //if (se2_promise!=undefined)
-      //{
-      //  let time1 = Math.floor(Math.random()*500);
-      //  soundEffect2.currentTime = time1; 
-      //  console.log(time1);
-      //}
-
+      sfx_1.calmMusic(); 
     }
   }
 }
@@ -48,34 +36,82 @@ function updateMusic(){
 
 
 
+function SoundFX(){
 
+	let sfx = Object.create(SoundFX.prototype);
 
+  sfx.soundEffect = new Audio(); //short SFX
+  sfx.bg_music = new Audio(); //background music
+  sfx.getUrl = window.location;
+  sfx.getUrlBase = sfx.getUrl.protocol + "//" + sfx.getUrl.host;
 
-//currently this is not being used
+  sfx.soundEffect.onended = function() {
+    console.log("track ended");
+    sfx.soundEffect.src=""; //release the track from the audio one complete
+  };
 
-
-function Sound(src) {
-      let soundy = Object.create(Sound.prototype);
-      soundy = document.createElement("audio");
-      soundy.src = src;
-      soundy.setAttribute("preload", "auto");
-      soundy.setAttribute("controls", "none");
-      soundy.style.display = "none";
-      document.body.appendChild(this.soundy);
-      this.play = function(){
-        this.sound.play();
-      }
-      this.stop = function(){
-        this.sound.pause();
-      }
+  console.log('sfx made');
+  return sfx;
 }
 
-Sound.prototype.play_or_continue_track(trackname) = function(){
-  if(this.sound.src!=trackname){
-    this.play(trackname);
+
+SoundFX.prototype.heartbeat = function () {
+    if(this.soundEffect.src != (this.getUrlBase+'/sounds/shortheartbeat.mp3')){
+      this.soundEffect.src = '/sounds/shortheartbeat.mp3';
+      this.soundEffect.play(); 
+    }
+ }
+
+SoundFX.prototype.trespass = function () {
+    if(this.soundEffect.src != (this.getUrlBase+ '/sounds/trespass.mp3')){
+      this.soundEffect.src = '/sounds/trespass.mp3';
+      this.soundEffect.play();
+    }
   }
+
+SoundFX.prototype.mummyAwaken = function () {
+    if(this.soundEffect.src != (this.getUrlBase+ '/sounds/mummyAwaken.mp3')){
+      this.soundEffect.src = '/sounds/mummyAwaken.mp3';
+      this.soundEffect.play();
+    }
+  }
+
+
+SoundFX.prototype.mummyFall = function () {
+    if(this.soundEffect.src != (this.getUrlBase+ '/sounds/fall_public.wav')){
+      this.soundEffect.src = '/sounds/fall_public.wav';
+      this.soundEffect.play();
+    }
+  }
+
+
+SoundFX.prototype.bell = function () {
+    if(this.soundEffect.src != (this.getUrlBase+ '/sounds/digsite.mp3')){
+      this.soundEffect.src = '/sounds/digsite.mp3';
+      this.soundEffect.play();
+    }
+  }
+
+
+SoundFX.prototype.meowExplode = function () {
+    if(this.soundEffect.src != (this.getUrlBase+ 'mummy_die_catbomb_public.mp3')){
+      this.soundEffect.src = '/sounds/mummy_die_catbomb_public.mp3';
+      this.soundEffect.play();
+    }
+  }
+
+SoundFX.prototype.chaseMusic = function () {
+    console.log(this.bg_music.src);
+    if(this.bg_music.src != (this.getUrlBase+'/sounds/fesliyan_chase.mp3')){
+      this.bg_music.src = 'sounds/fesliyan_chase.mp3';
+      this.bg_music.play();
+    }
 }
 
-
-
-
+   
+SoundFX.prototype.calmMusic = function () {
+    if(this.bg_music.src != (this.getUrlBase+'/sounds/calm_bg.mp3')){
+      this.bg_music.src = '/sounds/calm_bg.mp3';
+      this.bg_music.play();
+    }
+}

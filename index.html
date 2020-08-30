@@ -13,14 +13,18 @@
     <script src="pixi.min.js"></script>
     
     <script src="coordTransformations.js"></script>
-    <script src="objectTypes.js"></script>
+
+
+    <script src="gameworld_classes/Map.js"></script>
     <script src="gameworld_classes/Mummy.js"></script>
     <script src="gameworld_classes/Player.js"></script>
+    <script src="gameworld_classes/Meowcat.js"></script>
+    <script src="gameworld_classes/Digsite.js"></script>
 
-    <script src="gameSounds.js"></script>
     <script src="gameLoopAndUpdateStateFunctions.js"></script>
     <script src="gameworldGenerationFunctions.js"></script>
     <script src="parkmummies_setup_script.js"></script>
+    <script src="gameSounds.js"></script>
     <script src="globalVars.js"></script> <!-- globalVar should be loaded after setup_script -->
      <!-- headupdisplay should be loaded after setup_script -->
     <script src="userInput.js"></script> <!-- userInput should be loaded after setup_script -->
@@ -30,6 +34,10 @@
 
   </head>
   <body>
+  <div id="introDiv">
+
+
+  </div>
   <p id ="score"> </p>
   <div id="gameDiv"></div>
   <button id="bananaBtn">cupcake</button>
@@ -39,8 +47,7 @@
   <button id="lassoBtn">Lasso</button>
   <button id="gpsBtn">get GPS</button>
   <button id="bgMusicBtn">music</button>
-  <p id="latlong"></p>
-  <p>Background music: https://www.fesliyanstudios.com</p>
+  <p id="latlong"> Background music: https://www.fesliyanstudios.com</p>
 
   </body>
 </html>

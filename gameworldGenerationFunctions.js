@@ -18,13 +18,13 @@ function createMummiesAndAddToStage(_number_of_mummies_to_generate){ //uses glob
 }
 
 function createDigsitesAndAddToStage(_number_of_digsites_to_generate){ //uses global variables
-  //cupcake sites
+  //meocat sites
   for(i=0;i<_number_of_digsites_to_generate;i++){
     let i_x=get_ranged_rand_avoid_origin(0,max_location_range_gameworld_coords_x);
     let i_y=get_ranged_rand_avoid_origin(0,-1*max_location_range_gameworld_coords_y);
     let i_sprite=PIXI.Sprite.from(app.loader.resources.pickBlueSprite.texture);
     app.stage.addChild(i_sprite);
-    digsites.push( Digsite(i_x, i_y, digsiteAddsHearts, i_sprite,"cupcake"));
+    digsites.push( Digsite(i_x, i_y, digsiteAddsHearts, i_sprite,"meowcat"));
     //console.log("created dig site "+i+"location:"+i_x+" "+ i_y);
   }
 }

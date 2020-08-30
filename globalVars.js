@@ -41,8 +41,8 @@ max_location_range_gameworld_coords_y = 2100; //range of generated location x co
 
 
 //sound
-const soundEffect = new Audio(); //short SFX
-const soundEffect2 = new Audio(); //background chase music
+var sfx_1 = SoundFX();
+console.log(sfx_1);
 
 //Map
 //aligning map: must be precise
