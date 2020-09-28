@@ -31,7 +31,7 @@ Mummy.prototype.activate_if_player_close = function(_player_obj){
 			if(devTestSpot==true){
 				this.wakingModeEndTime = Date.now()+3000;
 			}else if ( this.active==false){
-				this.wakingModeEndTime = Date.now()+30000;
+				this.wakingModeEndTime = Date.now()+50000;
 			}
 		
 			this.awaking = true;
