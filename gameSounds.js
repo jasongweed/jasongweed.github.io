@@ -15,19 +15,19 @@ function updateMusic(){
   getUrl = getUrl.protocol + "//" + getUrl.host;// + "/" + getUrl.pathname.split('/')[1];
   if(chase_mode==true && user_has_interacted_with_UI==true) {
     //console.log("here is src: "++soundEffect2.src);
-    if(sfx_1.bg_music.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
+    if(sfx_2.bg_music.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
       //pass
     }else {
       //console.log("start chase");
-      sfx_1.chaseMusic();
+      sfx_2.chaseMusic();
     }  
   }else if (user_has_interacted_with_UI==true){ 
     //chase mode is false
-    if(sfx_1.bg_music.src==(getUrl+"/sounds/calm_bg.mp3")){
+    if(sfx_2.bg_music.src==(getUrl+"/sounds/calm_bg.mp3")){
       //already loaded bg music and playing, so let it keep playing
     }else if (true) { 
       console.log("start bg music");
-      sfx_1.calmMusic(); 
+      sfx_2.calmMusic(); 
     }
   }
 }
@@ -103,7 +103,7 @@ SoundFX.prototype.meowExplode = function () {
 SoundFX.prototype.chaseMusic = function () {
     console.log(this.bg_music.src);
     if(this.bg_music.src != (this.getUrlBase+'/sounds/fesliyan_chase.mp3')){
-      this.bg_music.src = 'sounds/fesliyan_chase.mp3';
+      this.bg_music.src = '/sounds/fesliyan_chase.mp3';
       this.bg_music.play();
     }
 }
