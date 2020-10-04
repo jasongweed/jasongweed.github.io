@@ -15,10 +15,10 @@ window.onload = function(){
   //preload assets
   app.loader.baseUrl = "images";
   app.loader.add("playerSprite","player.png").add("playerAttackModeSprite","playerAttackMode.png");
-  app.loader.add("mummySprite","mummy.png").add("mummyWakingSprite","mummyWaking.png");
-  app.loader.add("mapGrammercySprite","mapEastRiverPark.png").add("mapCentralParkSprite","centralpark3.png");
+  app.loader.add("mummySprite","mummy_red_dot_exclam.png").add("mummyWakingSprite","mummy_purple_dot_exclam.png");
+  app.loader.add("mapGrammercySprite","mapEastRiverPark_osm.png").add("mapCentralParkSprite","centralpark3.png");
   app.loader.add("questionMarkSprite","question_mark.png").add("bonesSprite","bones.png").add("meowcatSprite","meowcat.png");
-  app.loader.add("pickBlueSprite","pickblue.png").add("pickRedSprite","pickred.png").add("blackHoleSprite","blackHole.png");
+  app.loader.add("pickBlueSprite","star.png").add("pickRedSprite","pickred.png").add("blackHoleSprite","blackHole.png");
   app.loader.add("infinitySprite","infinity.png");
   app.loader.onProgress.add(showProgress);
   app.loader.onComplete.add(doneLoading);

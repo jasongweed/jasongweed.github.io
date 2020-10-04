@@ -18,7 +18,7 @@ function updateMusic(){
     if(sfx_2.bg_music.src==(getUrl+"/sounds/fesliyan_chase.mp3")) {
       //pass
     }else {
-      //console.log("start chase");
+      console.log("start chase");
       sfx_2.chaseMusic();
     }  
   }else if (user_has_interacted_with_UI==true){ 
@@ -26,7 +26,7 @@ function updateMusic(){
     if(sfx_2.bg_music.src==(getUrl+"/sounds/calm_bg.mp3")){
       //already loaded bg music and playing, so let it keep playing
     }else if (true) { 
-      console.log("start bg music");
+      console.log("not start bg music");
       sfx_2.calmMusic(); 
     }
   }
@@ -78,8 +78,8 @@ SoundFX.prototype.mummyAwaken = function () {
 
 
 SoundFX.prototype.mummyFall = function () {
-    if(this.soundEffect.src != (this.getUrlBase+ '/sounds/fall_public.wav')){
-      this.soundEffect.src = '/sounds/fall_public.wav';
+    if(this.soundEffect.src != (this.getUrlBase+ '/sounds/fall_public.mp3')){
+      this.soundEffect.src = '/sounds/fall_public.mp3';
       this.soundEffect.play();
     }
   }
@@ -111,6 +111,7 @@ SoundFX.prototype.chaseMusic = function () {
    
 SoundFX.prototype.calmMusic = function () {
     if(this.bg_music.src != (this.getUrlBase+'/sounds/calm_bg.mp3')){
+      this.bg_music.pause();
       this.bg_music.src = '/sounds/calm_bg.mp3';
       this.bg_music.play();
     }

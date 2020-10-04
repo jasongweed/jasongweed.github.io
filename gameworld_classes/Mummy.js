@@ -88,7 +88,7 @@ Mummy.prototype.chase = function(_player_obj) {
 			this.sprite.texture = app.loader.resources.mummySprite.texture;
 			//play sound
 			sfx_1.mummyAwaken(); //play mummy awaken snarl
-			sfx_1.chaseMusic(); //play chase music
+			//sfx_1.chaseMusic(); //play chase music
 			this.awaking=false;
 			this.active = true;
 		}

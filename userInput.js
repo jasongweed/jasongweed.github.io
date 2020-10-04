@@ -51,7 +51,7 @@ $(document).ready(function(){
     //soundEffect2.play();
     //soundEffect2.loop=true;
     user_has_interacted_with_UI=true;
-    sfx_2.calmMusic();
+    //sfx_2.calmMusic();
   });
 
 
