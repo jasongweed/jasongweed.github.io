@@ -46,7 +46,7 @@ $(document).ready(function(){
 
   $('#bgMusicBtn').click(function(){
     //soundEffect2.src = 'sounds/.mp3';
-    updateMusic();
+    //updateMusic();
     //soundEffect2.volume=0.5;
     //soundEffect2.play();
     //soundEffect2.loop=true;
