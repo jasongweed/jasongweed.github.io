@@ -120,7 +120,7 @@ SoundFX.prototype.chaseMusic = function () {
 
    
 SoundFX.prototype.calmMusic = function () {
-    if(this.bg_music.src != (this.getUrlBase+'/sounds/calm_bg.mp3')){
+    if(this.bg_music.src != (this.getUrlBase+'/sounds/calm_bg_old.mp3')){
       this.bg_music.src = '/sounds/calm_bg.mp3';
       this.bg_music.play();
       this.soundEffect.loop=true;
