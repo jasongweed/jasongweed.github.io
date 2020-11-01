@@ -8,7 +8,7 @@ var devTestSpot = false;
 var origin_gps_x = null; // latitude based on initial gps coordinates obtained
 var origin_gps_y = null; // longitude based on initial gps coordinates obtained
 var gps_accuracy = null;
-let gps_location_loaded = false;
+let gps_location_loaded = false; 
 let gps_last_timepoint = 0;//to be continuously updated
 
 
@@ -36,14 +36,15 @@ let keys = {}; //for accumulating pressed keyboard keys
 let user_has_interacted_with_UI = false;
 
 //gameworld related variables
-max_location_range_gameworld_coords_x = 600; //range of generated location x coordinates for creating sites around user
-max_location_range_gameworld_coords_y = 2100; //range of generated location x coordinates for creating sites around user
+max_location_range_gameworld_coords_x = 1300; //range of generated location x coordinates for creating sites around user
+max_location_range_gameworld_coords_y = 1300; //range of generated location x coordinates for creating sites around user
 
 
 //sound
 var sfx_1 = SoundFX();
-console.log(sfx_1);
+//console.log(sfx_1);
 var sfx_2 = SoundFX();
+
 
 //Map
 //aligning map: must be precise
@@ -55,7 +56,13 @@ var sfx_2 = SoundFX();
 //var mapBottomRightGpsCoordY = 40.764544;
 
 //east river park top left: lat 40.740340, -73.982292, bottom right 40.720455, -73.971297
-var mapTopLeftGpsCoordX = -73.982162;
-var mapTopLeftGpsCoordY = 40.740590;
-var mapBottomRightGpsCoordX = -73.970807;// old -73.971297;  
-var mapBottomRightGpsCoordY = 40.719045;// old 40.720455;
+//var mapTopLeftGpsCoordX = -73.982162;
+//var mapTopLeftGpsCoordY = 40.740590;
+//var mapBottomRightGpsCoordX = -73.970807;// old -73.971297;  
+//var mapBottomRightGpsCoordY = 40.719045;// old 40.720455;
+
+//west of grammercy: nycgowestwithcoords.png
+var mapTopLeftGpsCoordX = -74.0167;
+var mapTopLeftGpsCoordY = 40.74497;
+var mapBottomRightGpsCoordX = -73.9754;
+var mapBottomRightGpsCoordY = 40.72586;

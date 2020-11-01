@@ -44,11 +44,14 @@ function SoundFX(){
   sfx.bg_music = new Audio(); //background music
   sfx.getUrl = window.location;
   sfx.getUrlBase = sfx.getUrl.protocol + "//" + sfx.getUrl.host;
-
+  /*
+  sfx.repeatOn = true;
   sfx.soundEffect.onended = function() {
     console.log("track ended");
-    sfx.soundEffect.src=""; //release the track from the audio one complete
-  };
+    if(!sfx.repeatOn){
+      sfx.soundEffect.src=""; //release the track from the audio one complete
+    }
+  };*/
 
   console.log('sfx made');
   return sfx;
@@ -59,6 +62,7 @@ SoundFX.prototype.heartbeat = function () {
     if(this.soundEffect.src != (this.getUrlBase+'/sounds/shortheartbeat.mp3')){
       this.soundEffect.src = '/sounds/shortheartbeat.mp3';
       this.soundEffect.play(); 
+      this.soundEffect.loop=false;
     }
  }
 
@@ -66,6 +70,7 @@ SoundFX.prototype.trespass = function () {
     if(this.soundEffect.src != (this.getUrlBase+ '/sounds/trespass.mp3')){
       this.soundEffect.src = '/sounds/trespass.mp3';
       this.soundEffect.play();
+      this.soundEffect.loop=false;
     }
   }
 
@@ -73,6 +78,7 @@ SoundFX.prototype.mummyAwaken = function () {
     if(this.soundEffect.src != (this.getUrlBase+ '/sounds/mummyAwaken.mp3')){
       this.soundEffect.src = '/sounds/mummyAwaken.mp3';
       this.soundEffect.play();
+      this.soundEffect.loop=false;
     }
   }
 
@@ -81,6 +87,7 @@ SoundFX.prototype.mummyFall = function () {
     if(this.soundEffect.src != (this.getUrlBase+ '/sounds/fall_public.mp3')){
       this.soundEffect.src = '/sounds/fall_public.mp3';
       this.soundEffect.play();
+      this.soundEffect.loop=false;
     }
   }
 
@@ -89,6 +96,7 @@ SoundFX.prototype.bell = function () {
     if(this.soundEffect.src != (this.getUrlBase+ '/sounds/digsite.mp3')){
       this.soundEffect.src = '/sounds/digsite.mp3';
       this.soundEffect.play();
+      this.soundEffect.loop=false;
     }
   }
 
@@ -97,6 +105,7 @@ SoundFX.prototype.meowExplode = function () {
     if(this.soundEffect.src != (this.getUrlBase+ 'mummy_die_catbomb_public.mp3')){
       this.soundEffect.src = '/sounds/mummy_die_catbomb_public.mp3';
       this.soundEffect.play();
+      this.soundEffect.loop=false;
     }
   }
 
@@ -105,6 +114,7 @@ SoundFX.prototype.chaseMusic = function () {
     if(this.bg_music.src != (this.getUrlBase+'/sounds/fesliyan_chase.mp3')){
       this.bg_music.src = '/sounds/fesliyan_chase.mp3';
       this.bg_music.play();
+      this.soundEffect.loop=true;
     }
 }
 
@@ -113,5 +123,6 @@ SoundFX.prototype.calmMusic = function () {
     if(this.bg_music.src != (this.getUrlBase+'/sounds/calm_bg.mp3')){
       this.bg_music.src = '/sounds/calm_bg.mp3';
       this.bg_music.play();
+      this.soundEffect.loop=true;
     }
 }

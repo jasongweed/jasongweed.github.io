@@ -12,7 +12,10 @@
     <script src="bootstrap/bootstrap-4.3.1-dist/js/jquery-3.4.1.min.js"></script>
     <script src="pixi.min.js"></script>
     
+    <script src="hyper_vars.js"></script>
+
     <script src="coordTransformations.js"></script>
+
 
 
     <script src="gameworld_classes/Map.js"></script>
@@ -23,10 +26,9 @@
 
     <script src="gameLoopAndUpdateStateFunctions.js"></script>
     <script src="gameworldGenerationFunctions.js"></script>
-    <script src="parkmummies_setup_script.js"></script>
+    <script src="parkmummies_setup_script.js"></script> <!-- here is where execution starts-->
     <script src="gameSounds.js"></script>
     <script src="globalVars.js"></script> <!-- globalVar should be loaded after setup_script -->
-     <!-- headupdisplay should be loaded after setup_script -->
     <script src="userInput.js"></script> <!-- userInput should be loaded after setup_script -->
     
 
@@ -47,6 +49,8 @@
   <button id="lassoBtn">Lasso</button>
   <button id="gpsBtn">get GPS</button>
   <button id="bgMusicBtn">music</button>
+  <br>
+  <button id="pauseBtn">Pause game (e.g. to cross street)!</button>
   <p id="latlong"> Background music: https://www.fesliyanstudios.com</p>
 
   </body>

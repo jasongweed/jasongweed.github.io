@@ -1,6 +1,6 @@
 
 function gameLoop(){
-  if (gps_location_loaded){
+  if (gps_location_loaded && !game_paused){
     getKeyBoardInput();
     updatePlayer();
     updateMummies();

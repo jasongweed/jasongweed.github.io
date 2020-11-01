@@ -16,7 +16,7 @@ window.onload = function(){
   app.loader.baseUrl = "images";
   app.loader.add("playerSprite","player.png").add("playerAttackModeSprite","playerAttackMode.png");
   app.loader.add("mummySprite","mummy_red_dot_exclam.png").add("mummyWakingSprite","mummy_purple_dot_exclam.png");
-  app.loader.add("mapGrammercySprite","mapEastRiverPark_osm.png").add("mapCentralParkSprite","centralpark3.png");
+  app.loader.add("mapGrammercySprite","nycgowestwithcoords.png").add("mapCentralParkSprite","centralpark3.png");
   app.loader.add("questionMarkSprite","question_mark.png").add("bonesSprite","bones.png").add("meowcatSprite","meowcat.png");
   app.loader.add("pickBlueSprite","star.png").add("pickRedSprite","pickred.png").add("blackHoleSprite","blackHole.png");
   app.loader.add("infinitySprite","infinity.png");
@@ -53,10 +53,9 @@ var geo_options = {
 function getLocationInit() {
   if (navigator.geolocation) {
     watchPosition(get_gps_success_fn);
-    //navigator.geolocation.getCurrentPosition(getGeoPosition,geo_error,geo_options);
     //console.log("Got geolocation information");
     if(origin_gps_x!=null){
-      gps_location_loaded=true;
+      gps_location_loaded=true; //this is a global var
     }
 
   } else { 
@@ -112,11 +111,6 @@ function reportError(e){
 
 
 
-
-
-
-
-
 function doneLoading(e){
 
   //this section is effectively main() for the app 
@@ -125,6 +119,7 @@ function doneLoading(e){
   origin_gps_y=gps_y_current;
   pixi_center_x = app.view.width/2.0;
   pixi_center_y = app.view.height/2.0;
+
 
 
   //load map as sprite store within a Map type object
@@ -137,8 +132,11 @@ function doneLoading(e){
   createPlayerAndAddToStage();
   createInfinitySitesAndAddToStage(number_of_infsites_to_generate);
 
+
+
   //game loop -- this adds and starts the main gameLoop function
   app.ticker.add(gameLoop);
+
 
 
 

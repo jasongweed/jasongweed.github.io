@@ -31,6 +31,13 @@ $(document).ready(function(){
     player_obj.lassoStrike();
     console.log("lassoBtn hit");
   });
+  
+  $('#pauseBtn').click(function(){
+    if(game_paused){
+      game_paused=false;
+    }else{game_paused=true;}
+    console.log("pause button hit");
+  });
 
   $('#gpsBtn').click(function(){
     let latlong_pair=txf_gameworld_to_GPS(player_obj.x, player_obj.y, origin_gps_x, origin_gps_y, gps_to_map_scale_factor,long_over_lat_degree_dist_ratio)
