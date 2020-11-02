@@ -23,7 +23,7 @@ function updateMusic(){
     }  
   }else if (user_has_interacted_with_UI==true){ 
     //chase mode is false
-    if(sfx_2.bg_music.src==(getUrl+"/sounds/calm_bg.mp3")){
+    if(sfx_2.bg_music.src==(getUrl+"/sounds/calm_bg_old.mp3")){
       //already loaded bg music and playing, so let it keep playing
     }else if (true) { 
       console.log("not start bg music");
@@ -121,7 +121,7 @@ SoundFX.prototype.chaseMusic = function () {
    
 SoundFX.prototype.calmMusic = function () {
     if(this.bg_music.src != (this.getUrlBase+'/sounds/calm_bg_old.mp3')){
-      this.bg_music.src = '/sounds/calm_bg.mp3';
+      this.bg_music.src = '/sounds/calm_bg_old.mp3';
       this.bg_music.play();
       this.soundEffect.loop=true;
     }
