@@ -61,8 +61,8 @@ var sfx_2 = SoundFX();
 //var mapBottomRightGpsCoordX = -73.970807;// old -73.971297;  
 //var mapBottomRightGpsCoordY = 40.719045;// old 40.720455;
 
-//west of grammercy: nycgowestwithcoords.png
-var mapTopLeftGpsCoordX = -74.0167;
-var mapTopLeftGpsCoordY = 40.74497;
-var mapBottomRightGpsCoordX = -73.9754;
-var mapBottomRightGpsCoordY = 40.72586;
+//Prospect Park
+var mapTopLeftGpsCoordX = -73.979656;
+var mapTopLeftGpsCoordY = 40.67454;
+var mapBottomRightGpsCoordX = -73.958874;
+var mapBottomRightGpsCoordY = 40.651196;
