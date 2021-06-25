@@ -62,7 +62,7 @@ var sfx_2 = SoundFX();
 //var mapBottomRightGpsCoordY = 40.719045;// old 40.720455;
 
 //Prospect Park
-var mapTopLeftGpsCoordX = -73.98186;
-var mapTopLeftGpsCoordY = 40.67351;
-var mapBottomRightGpsCoordX = -73.958874;
-var mapBottomRightGpsCoordY = 40.651196;
+var mapTopLeftGpsCoordX = -73.979654;
+var mapTopLeftGpsCoordY = 40.67242;
+var mapBottomRightGpsCoordX = -73.958867;
+var mapBottomRightGpsCoordY = 40.651332;
