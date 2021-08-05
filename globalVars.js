@@ -62,7 +62,14 @@ var sfx_2 = SoundFX();
 //var mapBottomRightGpsCoordY = 40.719045;// old 40.720455;
 
 //Prospect Park
-var mapTopLeftGpsCoordX = -73.979654;
+/*var mapTopLeftGpsCoordX = -73.979654;
 var mapTopLeftGpsCoordY = 40.67242;
 var mapBottomRightGpsCoordX = -73.958867;
 var mapBottomRightGpsCoordY = 40.651332;
+*/
+
+//Tarifa
+var mapTopLeftGpsCoordX = -5.607551763889505 ;
+var mapTopLeftGpsCoordY = 36.014708103672454;
+var mapBottomRightGpsCoordX = -5.597429867902984;
+var mapBottomRightGpsCoordY = 36.01045787548373;
