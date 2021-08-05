@@ -36,8 +36,8 @@ let keys = {}; //for accumulating pressed keyboard keys
 let user_has_interacted_with_UI = false;
 
 //gameworld related variables
-max_location_range_gameworld_coords_x = 1300; //range of generated location x coordinates for creating sites around user
-max_location_range_gameworld_coords_y = 1300; //range of generated location x coordinates for creating sites around user
+max_location_range_gameworld_coords_x = 800; //range of generated location x coordinates for creating sites around user
+max_location_range_gameworld_coords_y = 800; //range of generated location x coordinates for creating sites around user
 
 
 //sound
@@ -69,7 +69,7 @@ var mapBottomRightGpsCoordY = 40.651332;
 */
 
 //Tarifa
-var mapTopLeftGpsCoordX = -5.607551763889505 ;
-var mapTopLeftGpsCoordY = 36.014708103672454;
-var mapBottomRightGpsCoordX = -5.597429867902984;
-var mapBottomRightGpsCoordY = 36.01045787548373;
+var mapTopLeftGpsCoordX =       -5.607551763889505 ;
+var mapTopLeftGpsCoordY =       36.014708103672454;
+var mapBottomRightGpsCoordX =   -5.597029867902984;
+var mapBottomRightGpsCoordY =   36.0101787548373;
