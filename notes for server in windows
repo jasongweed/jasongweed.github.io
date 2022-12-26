@@ -1,28 +1,6 @@
 server in windows
 
 1. open cmd
-2. >>cd Desktop\softdev_MS\parkmummies
-3. >>python -m http.server
+2. >>cd /c/Users/jason/jasongweed.github.io
+3. >>python3 -m http.server
 
-
-copied from webiste
-Open your command prompt (Windows)/ terminal (macOS/ Linux). To check Python is installed, enter the following command:
-
-python -V
-# Or you might have the py command available,
-# in which case try py -V
-This should return a version number. If this is OK, navigate to the directory that your example is inside, using the cd command.
-
-# include the directory name to enter it, for example
-cd Desktop
-# use two dots to jump up one directory level if you need to
-cd ..
-Enter the command to start up the server in that directory:
-
-# If Python version returned above is 3.X
-python3 -m http.server
-# On windows try "python" instead of "python3", or "py -3"
-# If Python version returned above is 2.X
-python -m SimpleHTTPServer
-
-By default, this will run the contents of the directory on a local web server, on port 8000. You can go to this server by going to the URL localhost:8000 in your web browser.
